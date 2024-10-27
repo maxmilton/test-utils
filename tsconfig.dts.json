@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist",
+    "skipLibCheck": true
+  },
+  "include": ["src/css.ts", "src/dom.ts", "src/extend.ts", "src/spy.ts"]
+}
