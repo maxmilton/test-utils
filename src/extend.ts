@@ -1,15 +1,8 @@
-import { expect } from 'bun:test';
+/**
+ * @overview Extended matchers for Bun test.
+ */
 
-// // Make imported .xcss files return empty to prevent test errors.
-// Bun.plugin({
-//   name: 'xcss',
-//   setup(build) {
-//     build.onLoad({ filter: /\.xcss$/ }, () => ({
-//       contents: '',
-//       // loader: 'css',
-//     }));
-//   },
-// });
+import { expect } from 'bun:test';
 
 /**
  * Get the total number of parameters of a function including optional

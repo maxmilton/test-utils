@@ -1,3 +1,7 @@
+/**
+ * @overview Virtual browser DOM and utilities for writing DOM tests.
+ */
+
 /* eslint "@typescript-eslint/no-invalid-void-type": "warn" */
 
 import { GlobalWindow, type Window } from 'happy-dom';

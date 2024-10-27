@@ -1,3 +1,7 @@
+/**
+ * @overview Bun test introspection utilities to spy on internals.
+ */
+
 import { type Mock, expect, spyOn } from 'bun:test';
 
 // TODO: Use this implementation if happy-dom removes internal performance.now calls.
