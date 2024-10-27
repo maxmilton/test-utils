@@ -34,7 +34,6 @@
   "scripts": {
     "build": "bun build.ts",
     "postbuild": "tsc --project ./tsconfig.dts.json",
-    "___postbuild": "tsc -p ./tsconfig.json --emitDeclarationOnly --declaration --declarationMap --declarationDir dist --skipLibCheck --target esnext src/css.ts src/dom.ts src/extend.ts src/spy.ts",
     "lint": "bun lint:fmt && bun lint:js && bun lint:ts",
     "lint:fmt": "biome check",
     "lint:js": "eslint",
