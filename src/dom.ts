@@ -28,7 +28,7 @@ const originalConsole = global.console;
 /**
  * Setup virtual DOM via happy-dom.
  *
- * Takes the same options as `new Window(options)`.
+ * Takes the same options as happy-dom's Window constructor.
  * @see https://github.com/capricorn86/happy-dom/wiki/Window
  */
 export function setupDOM(
@@ -41,6 +41,10 @@ export function setupDOM(
   global.window = dom.window.document.defaultView;
   global.document = window.document;
   global.console = window.console; // https://github.com/capricorn86/happy-dom/wiki/Virtual-Console
+  global.navigator = window.navigator;
+  global.location = window.location;
+  global.history = window.history;
+  global.localStorage = window.localStorage;
   global.fetch = window.fetch;
   global.setTimeout = window.setTimeout;
   global.clearTimeout = window.clearTimeout;
@@ -52,6 +56,9 @@ export function setupDOM(
   global.requestAnimationFrame = window.requestAnimationFrame;
   global.cancelAnimationFrame = window.cancelAnimationFrame;
   global.postMessage = window.postMessage;
+  global.dispatchEvent = window.dispatchEvent;
+  global.addEventListener = window.addEventListener;
+  global.removeEventListener = window.removeEventListener;
   global.DocumentFragment = window.DocumentFragment;
   global.MutationObserver = window.MutationObserver;
   global.CSSStyleSheet = window.CSSStyleSheet;
