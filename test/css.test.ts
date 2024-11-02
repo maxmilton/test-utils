@@ -1,5 +1,4 @@
 import { describe, expect, mock, test } from 'bun:test';
-// biome-ignore lint/style/noNamespaceImport: explicitly for testing
 import * as stylisExports from 'stylis';
 import {
   DECLARATION,
@@ -16,7 +15,6 @@ import {
   reduce,
   walk,
 } from '../src/css';
-// biome-ignore lint/style/noNamespaceImport: explicitly for testing
 import * as cssExports from '../src/css';
 
 describe('exports', () => {

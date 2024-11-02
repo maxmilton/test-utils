@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, max-classes-per-file, no-console, unicorn/consistent-function-scoping */
 
 import { describe, expect, spyOn, test } from 'bun:test';
-// biome-ignore lint/style/noNamespaceImport: explicitly for testing
 import * as extendExports from '../src/extend';
 import { parameters } from '../src/extend';
 
@@ -355,7 +354,7 @@ describe('parameters', () => {
     test.skip('excess whitespace', () => {
       expect.assertions(1);
       // biome-ignore format: explicit test case
-      // eslint-disable-next-line no-multi-spaces, space-before-function-paren, space-in-parens
+      // eslint-disable-next-line no-multi-spaces, space-in-parens
       function   foo (  _a  =
           // eslint-disable-next-line comma-spacing, no-multi-spaces
           1  ,
@@ -863,7 +862,7 @@ describe('parameters', () => {
     });
   });
 
-  /* eslint-disable lines-between-class-members, @typescript-eslint/no-empty-function, @typescript-eslint/no-extraneous-class, @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-useless-constructor, class-methods-use-this */
+  /* eslint-disable @typescript-eslint/no-empty-function, @typescript-eslint/no-extraneous-class, @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-useless-constructor, class-methods-use-this */
   describe('classes', () => {
     test('basic', () => {
       expect.assertions(1);
@@ -1166,8 +1165,8 @@ describe('parameters', () => {
       });
     });
   });
-  /* eslint-enable lines-between-class-members, @typescript-eslint/no-empty-function, @typescript-eslint/no-extraneous-class, @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-useless-constructor, class-methods-use-this */
 
+  /* eslint-enable @typescript-eslint/no-empty-function, @typescript-eslint/no-extraneous-class, @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-useless-constructor, class-methods-use-this */
   describe('native functions', () => {
     /* eslint-disable @typescript-eslint/unbound-method */
     const builtins: [text: string, func: (...args: never[]) => unknown, length: number][] = [

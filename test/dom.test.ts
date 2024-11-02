@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, spyOn, test } from 'bun:test';
 import { VirtualConsole } from 'happy-dom';
-// biome-ignore lint/style/noNamespaceImport: explicitly for testing
 import * as domExports from '../src/dom';
 import { cleanup, originalConsoleCtor, render } from '../src/dom';
 import { Test } from './TestComponent';

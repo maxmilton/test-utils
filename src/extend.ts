@@ -1,5 +1,5 @@
 /**
- * @overview Extended matchers for Bun test.
+ * @file Extended matchers for Bun test.
  */
 
 import { expect } from 'bun:test';

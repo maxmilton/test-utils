@@ -1,5 +1,5 @@
 /**
- * @overview CSS engine and utilities for writing CSS tests.
+ * @file CSS engine and utilities for writing CSS tests.
  */
 
 import {

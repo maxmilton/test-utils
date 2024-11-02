@@ -1,5 +1,5 @@
 /**
- * @overview Bun test introspection utilities to spy on internals.
+ * @file Bun test introspection utilities to spy on internals.
  */
 
 import { type Mock, expect, spyOn } from 'bun:test';

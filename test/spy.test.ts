@@ -1,5 +1,4 @@
 import { describe, expect, test } from 'bun:test';
-// biome-ignore lint/style/noNamespaceImport: explicitly for testing
 import * as spyExports from '../src/spy';
 import { performanceSpy } from '../src/spy';
 

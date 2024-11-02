@@ -1,5 +1,5 @@
 /**
- * @overview Virtual browser DOM and utilities for writing DOM tests.
+ * @file Virtual browser DOM and utilities for writing DOM tests.
  */
 
 /* eslint "@typescript-eslint/no-invalid-void-type": "warn" */
