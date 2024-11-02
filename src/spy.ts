@@ -27,7 +27,7 @@ const methods = Object.getOwnPropertyNames(
   performance,
 ) as (keyof Performance)[];
 
-export function performanceSpy(): () => void {
+export function performanceSpy(exclude: string[] = []): () => void {
   const spies: Mock<() => void>[] = [];
   let happydomInternalNowCalls = 0;
 
@@ -41,11 +41,13 @@ export function performanceSpy(): () => void {
   }
 
   for (const method of methods) {
-    spies.push(
-      method === 'now'
-        ? spyOn(performance, method).mockImplementation(now)
-        : spyOn(performance, method),
-    );
+    if (!exclude.includes(method)) {
+      spies.push(
+        method === 'now'
+          ? spyOn(performance, method).mockImplementation(now)
+          : spyOn(performance, method),
+      );
+    }
   }
 
   return /** check */ () => {

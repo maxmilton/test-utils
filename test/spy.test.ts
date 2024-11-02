@@ -29,9 +29,9 @@ describe('performanceSpy', () => {
     expect(performanceSpy).not.toBeClass();
   });
 
-  test('expects no parameters', () => {
+  test('expects 1 optional parameter', () => {
     expect.assertions(1);
-    expect(performanceSpy).toHaveParameters(0, 0);
+    expect(performanceSpy).toHaveParameters(0, 1);
   });
 
   test('returns a function', () => {
@@ -64,6 +64,13 @@ describe('performanceSpy', () => {
     const check = performanceSpy();
     performance.mark('a');
     performance.measure('a', 'a');
+    check();
+  });
+
+  test('does not spy on excluded methods', () => {
+    expect.hasAssertions(); // variable number of assertions
+    const check = performanceSpy(['now']);
+    performance.now();
     check();
   });
 });
