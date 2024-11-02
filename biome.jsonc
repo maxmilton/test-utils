@@ -23,7 +23,7 @@
         "noUndeclaredDependencies": "warn",
         "noUndeclaredVariables": "warn",
         "noUnusedFunctionParameters": "warn",
-        "noUnusedImports": "error"
+        "noUnusedImports": { "level": "error", "fix": "none" }
       },
       "performance": {
         "noBarrelFile": "info",
@@ -46,7 +46,7 @@
         "useExplicitLengthCheck": "warn",
         "useNamingConvention": {
           "level": "error",
-          "options": { "strictCase": false }
+          "options": { "enumMemberCase": "CONSTANT_CASE", "strictCase": false }
         },
         "useShorthandArrayType": "error",
         "useShorthandAssign": "error",
@@ -78,7 +78,7 @@
         "noDynamicNamespaceImportAccess": "error",
         "noEnum": "error",
         "noExportedImports": "error",
-        "noSecrets": "warn", // TODO: Change to "error" when more stable
+        // "noSecrets": "info", // TODO: Change to "error" when more stable
         "noSubstr": "warn",
         "noUnknownPseudoClass": "warn",
         "noUnknownPseudoElement": "warn",
@@ -113,6 +113,9 @@
         "rules": {
           "correctness": {
             "noUndeclaredDependencies": "off"
+          },
+          "style": {
+            "noNamespaceImport": "off"
           }
         }
       },
@@ -121,12 +124,12 @@
       }
     },
     {
-      "include": ["build.ts", "*.config.ts"],
+      "include": ["*.config.mjs", "*.config.ts", "*.d.ts", "build.ts"],
       "linter": {
         "rules": {
-          "correctness": {
-            "noUndeclaredDependencies": "off"
-          },
+          // "correctness": {
+          //   "noUndeclaredDependencies": "off"
+          // },
           "style": {
             "noNamespaceImport": "off",
             "useNamingConvention": "off"
@@ -137,7 +140,7 @@
         }
       },
       "javascript": {
-        "globals": ["Bun", "chrome"]
+        "globals": ["Bun"]
       }
     }
   ]
