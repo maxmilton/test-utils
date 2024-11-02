@@ -34,6 +34,11 @@ const originalConsole = global.console;
 export function setupDOM(
   options?: AbstractConstructorParameters<typeof Window>[0],
 ): void {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (global.happyDOM) {
+    throw new Error('DOM has already been set up');
+  }
+
   const dom = new GlobalWindow(options);
   global.happyDOM = dom.happyDOM;
   global.$console = originalConsole;
