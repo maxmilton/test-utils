@@ -50,8 +50,6 @@ export function setupDOM(
   global.clearTimeout = window.clearTimeout;
   global.setInterval = window.setInterval;
   global.clearInterval = window.clearInterval;
-  global.setImmediate = window.setImmediate;
-  global.clearImmediate = window.clearImmediate;
   global.queueMicrotask = window.queueMicrotask;
   global.requestAnimationFrame = window.requestAnimationFrame;
   global.cancelAnimationFrame = window.cancelAnimationFrame;
