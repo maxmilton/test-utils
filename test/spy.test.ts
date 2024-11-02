@@ -23,6 +23,8 @@ describe('exports', () => {
 });
 
 describe('performanceSpy', () => {
+  // const methods = Reflect.ownKeys(performance).filter((prop) => typeof performance[prop] === 'function') as (keyof Performance)[];
+
   test('is a function', () => {
     expect.assertions(2);
     expect(performanceSpy).toBeFunction();
@@ -73,4 +75,13 @@ describe('performanceSpy', () => {
     performance.now();
     check();
   });
+
+  // TODO: Test each method individually once test.each().failing() is
+  // supported in bun. Note that some methods require arguments.
+  // test.each(methods)('spies on "%s" method', (method) => {
+  //   expect.hasAssertions(); // variable number of assertions
+  //   const check = performanceSpy();
+  //   performance[method]();
+  //   check();
+  // });
 });

@@ -23,9 +23,19 @@ import { type Mock, expect, spyOn } from 'bun:test';
 // }
 
 const originalNow = performance.now.bind(performance);
-const methods = Object.getOwnPropertyNames(
-  performance,
-) as (keyof Performance)[];
+// const methods = Reflect.ownKeys(performance).filter((prop) => typeof performance[prop] === 'function') as (keyof Performance)[];
+const methods = [
+  'clearMarks',
+  'clearMeasures',
+  'clearResourceTimings',
+  'getEntries',
+  'getEntriesByName',
+  'getEntriesByType',
+  'mark',
+  'measure',
+  'now',
+  'setResourceTimingBufferSize',
+] as (keyof Performance)[];
 
 export function performanceSpy(exclude: string[] = []): () => void {
   const spies: Mock<() => void>[] = [];
