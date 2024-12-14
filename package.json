@@ -24,6 +24,11 @@
       "bun": "./src/extend.ts",
       "default": "./dist/extend.js"
     },
+    "./html": {
+      "types": "./dist/index.d.ts",
+      "bun": "./src/html.ts",
+      "default": "./dist/html.js"
+    },
     "./spy": {
       "types": "./dist/index.d.ts",
       "bun": "./src/spy.ts",
