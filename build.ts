@@ -7,17 +7,18 @@ console.timeEnd('prebuild');
 console.time('build');
 const out = await Bun.build({
   entrypoints: [
-    // 'src/index.ts',
     'src/css.ts',
     'src/dom.ts',
     'src/extend.ts',
+    'src/html.ts',
     'src/spy.ts',
   ],
   outdir: 'dist',
   target: 'bun',
-  external: ['happy-dom', 'stylis'],
+  external: ['@maxmilton/html-parser', 'happy-dom', 'stylis'],
   minify: true,
   sourcemap: 'linked',
 });
 console.timeEnd('build');
-console.log(out);
+console.log(out.outputs);
+if (!out.success) throw new AggregateError(out.logs, 'Build failed');
