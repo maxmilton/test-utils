@@ -175,6 +175,7 @@ describe('walk', () => {
     const selectors: string[] = [];
     walk(ast, (element) => {
       if (element.type === RULESET) {
+        // eslint-disable-next-line @typescript-eslint/no-misused-spread
         selectors.push(...element.props);
       }
     });
