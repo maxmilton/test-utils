@@ -45,7 +45,6 @@ describe('matcher: toBePlainObject', () => {
     Object,
     /(?:)/,
     new Date(),
-    // biome-ignore lint/suspicious/useErrorMessage: simple test case
     new Error(), // eslint-disable-line unicorn/error-message
     new Map(),
     new Set(),
@@ -62,9 +61,7 @@ describe('matcher: toBePlainObject', () => {
     undefined,
     Symbol('sym'),
     BigInt(1234),
-    // biome-ignore lint/style/useNumberNamespace: for tests
     NaN, // eslint-disable-line unicorn/prefer-number-properties
-    // biome-ignore lint/style/useNumberNamespace: for tests
     Infinity,
   ];
 
@@ -103,9 +100,7 @@ describe('matcher: toBeClass', () => {
     undefined,
     Symbol('sym'),
     BigInt(1234),
-    // biome-ignore lint/style/useNumberNamespace: for tests
     NaN, // eslint-disable-line unicorn/prefer-number-properties
-    // biome-ignore lint/style/useNumberNamespace: for tests
     Infinity,
     {},
     { foo: 'bar' },
@@ -126,7 +121,6 @@ describe('matcher: toBeClass', () => {
     Object,
     /(?:)/,
     new Date(),
-    // biome-ignore lint/suspicious/useErrorMessage: simple test case
     new Error(), // eslint-disable-line unicorn/error-message
     new Map(),
     new Set(),
@@ -548,7 +542,6 @@ describe('parameters', () => {
     test('nested string template literals simple', () => {
       expect.assertions(1);
       // NOTE: Bun optimizes simple template literals into a single string
-      // biome-ignore lint/style/noUnusedTemplateLiteral: explicit test case
       function foo(_a = `x,${`y,${`z,`},`},`, _b = ``) {} // eslint-disable-line @typescript-eslint/no-unnecessary-template-expression, quotes
       expect(parameters(foo)).toBe(2);
     });
@@ -580,7 +573,6 @@ describe('parameters', () => {
 
     test('escaped `', () => {
       expect.assertions(1);
-      // biome-ignore lint/style/noUnusedTemplateLiteral: explicit test case
       function foo(_a = `\``, _b = `\``) {} // eslint-disable-line quotes
       expect(parameters(foo)).toBe(2);
     });
@@ -617,7 +609,6 @@ describe('parameters', () => {
 
     test('case 2', () => {
       expect.assertions(1);
-      // biome-ignore lint/style/useDefaultParameterLast: explicit test case
       function foo(_a = () => {}, _b: unknown) {} // eslint-disable-line @typescript-eslint/default-param-last
       expect(parameters(foo)).toBe(2);
     });
@@ -651,19 +642,12 @@ describe('parameters', () => {
       const z = 3;
       async function foo(
         /* eslint-disable @typescript-eslint/default-param-last */
-        // biome-ignore lint/style/useDefaultParameterLast: explicit test case
         _a = { x: 1, y: 2, z }, // eslint-disable-line unicorn/no-object-as-default-parameter
-        // biome-ignore lint/style/useDefaultParameterLast: explicit test case
         _b = [1, 2, 3],
-        // biome-ignore lint/style/useDefaultParameterLast: explicit test case
         _c = () => {},
-        // biome-ignore lint/style/useDefaultParameterLast: explicit test case
         _d = Date.now(),
-        // biome-ignore lint/style/useDefaultParameterLast: explicit test case
         _e = z,
-        // biome-ignore lint/style/useDefaultParameterLast: explicit test case
         _f = z + 1 - (2 * 3) / 4,
-        // biome-ignore lint/style/useDefaultParameterLast: explicit test case
         _g = Number.parseInt('123.456', 10),
         _h: unknown,
         _i = `,${String(z)},${String(z)},${String(z)},`,
@@ -682,7 +666,6 @@ describe('parameters', () => {
       const x = 1;
       // eslint-disable-next-line @typescript-eslint/no-shadow
       function foo(x: unknown) {
-        // biome-ignore lint/suspicious/noConsoleLog: explicit test case
         console.log(x);
       }
       expect(parameters(foo)).toBe(1);
@@ -700,14 +683,12 @@ describe('parameters', () => {
   describe('non-ASCII identifiers', () => {
     test('case 1', () => {
       expect.assertions(1);
-      // biome-ignore lint/correctness/noUnusedFunctionParameters: explicit test case
       function 𝑓𝑜𝑜(𝑎: unknown, 𝑏: unknown) {}
       expect(parameters(𝑓𝑜𝑜)).toBe(2);
     });
 
     test('case 2', () => {
       expect.assertions(1);
-      // biome-ignore lint/correctness/noUnusedFunctionParameters: explicit test case
       const 𝑓𝑜𝑜 = (𝑎: unknown, 𝑏: unknown) => {};
       expect(parameters(𝑓𝑜𝑜)).toBe(2);
     });
@@ -742,8 +723,6 @@ describe('parameters', () => {
     test('basic', () => {
       expect.assertions(1);
       function foo(_a: unknown, _b: unknown) {
-        // biome-ignore lint/suspicious/noConsoleLog: explicit test case
-        // biome-ignore lint/style/noArguments: explicit test case
         console.log(arguments); // eslint-disable-line prefer-rest-params
       }
       expect(parameters(foo)).toBe(2);
@@ -1258,7 +1237,6 @@ describe('parameters', () => {
       ['new Promise(() => {})', new Promise(() => {})],
       ['new Date()', new Date()],
       ['/(?:)/', /(?:)/],
-      // biome-ignore lint/suspicious/useErrorMessage: simple test case
       ['new Error()', new Error()], // eslint-disable-line unicorn/error-message
       ['Math', Math],
       ['JSON', JSON],
@@ -1279,7 +1257,6 @@ describe('parameters', () => {
       // eslint-disable-next-line no-restricted-globals
       ['self', self],
       ['this', this],
-      // biome-ignore lint/style/noArguments: explicit test case
       ['arguments', arguments], // eslint-disable-line prefer-rest-params
       ['new.target', new.target],
 

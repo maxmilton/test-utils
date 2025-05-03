@@ -9,7 +9,7 @@
   "type": "module",
   "exports": {
     "./css": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/css.d.ts",
       "bun": "./src/css.ts",
       "default": "./dist/css.js"
     },
@@ -19,27 +19,28 @@
       "default": "./dist/dom.js"
     },
     "./extend": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/extend.d.ts",
       "bun": "./src/extend.ts",
       "default": "./dist/extend.js"
     },
     "./html": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/html.d.ts",
       "bun": "./src/html.ts",
       "default": "./dist/html.js"
     },
     "./spy": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/spy.d.ts",
       "bun": "./src/spy.ts",
       "default": "./dist/spy.js"
     },
-    "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "bun build.ts",
-    "postbuild": "tsc --project ./tsconfig.dts.json",
     "lint": "bun lint:fmt && bun lint:js && bun lint:ts",
     "lint:fmt": "biome check",
     "lint:js": "eslint",
@@ -47,28 +48,37 @@
     "test": "bun test"
   },
   "peerDependencies": {
-    "happy-dom": "^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
+    "@maxmilton/html-parser": "^0.0.0",
+    "happy-dom": ">=14.0.0 <18.0.0",
+    "stylis": "^4.0.0"
   },
   "peerDependenciesMeta": {
+    "@maxmilton/html-parser": {
+      "optional": true
+    },
     "happy-dom": {
+      "optional": true
+    },
+    "stylis": {
       "optional": true
     }
   },
-  "dependencies": {
-    "@maxmilton/html-parser": "^0.0.11",
-    "@types/stylis": "^4.2.7",
-    "stylis": "^4.3.6"
+  "optionalDependencies": {
+    "@types/stylis": "^4.2.7"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@eslint/js": "9.23.0",
+    "@biomejs/biome": "2.0.0-beta.2",
+    "@eslint/js": "9.26.0",
     "@maxmilton/eslint-config": "0.0.9",
-    "@types/bun": "1.2.8",
-    "eslint": "9.23.0",
-    "eslint-plugin-unicorn": "58.0.0",
-    "happy-dom": "17.4.4",
-    "stage1": "0.8.0-next.16",
-    "typescript": "5.8.2",
-    "typescript-eslint": "8.29.0"
+    "@maxmilton/html-parser": "0.0.11",
+    "@types/bun": "1.2.11",
+    "@types/stylis": "4.2.7",
+    "eslint": "9.26.0",
+    "eslint-plugin-unicorn": "59.0.0",
+    "happy-dom": "17.4.6",
+    "stage1": "0.8.0-next.17",
+    "stylis": "4.3.6",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.31.1"
   }
 }

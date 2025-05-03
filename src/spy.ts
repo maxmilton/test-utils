@@ -2,7 +2,7 @@
  * @file Bun test introspection utilities to spy on internals.
  */
 
-import { type Mock, expect, spyOn } from 'bun:test';
+import { expect, type Mock, spyOn } from 'bun:test';
 
 // TODO: Use this implementation if happy-dom removes internal performance.now calls.
 // const methods = Object.getOwnPropertyNames(performance) as (keyof Performance)[];
@@ -42,9 +42,8 @@ export function performanceSpy(exclude: string[] = []): () => void {
   let happydomInternalNowCalls = 0;
 
   function now() {
-    // biome-ignore lint/suspicious/useErrorMessage: only used to get stack
-    const callerLocation = new Error().stack!.split('\n')[3]; // eslint-disable-line unicorn/error-message
-    if (callerLocation.includes('/node_modules/happy-dom/lib/')) {
+    const callerLocation = new Error().stack?.split('\n')[3]; // eslint-disable-line unicorn/error-message
+    if (callerLocation?.includes('/node_modules/happy-dom/lib/')) {
       happydomInternalNowCalls++;
     }
     return originalNow();
@@ -65,10 +64,8 @@ export function performanceSpy(exclude: string[] = []): () => void {
       if (spy.getMockName() === 'now') {
         // HACK: Workaround for happy-dom calling performance.now internally.
         //  ↳ https://github.com/search?q=repo%3Acapricorn86%2Fhappy-dom%20performance.now&type=code
-        // biome-ignore lint/suspicious/noMisplacedAssertion: only used within tests
         expect(spy).toHaveBeenCalledTimes(happydomInternalNowCalls);
       } else {
-        // biome-ignore lint/suspicious/noMisplacedAssertion: only used within tests
         expect(spy).not.toHaveBeenCalled();
       }
       spy.mockRestore();

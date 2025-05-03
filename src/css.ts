@@ -3,6 +3,7 @@
  */
 
 import {
+  compile,
   DECLARATION,
   type Element,
   LAYER,
@@ -10,11 +11,8 @@ import {
   RULESET,
   SCOPE,
   SUPPORTS,
-  compile,
 } from 'stylis';
 
-// biome-ignore lint/performance/noBarrelFile: prefer nice DX in tests
-// biome-ignore lint/performance/noReExportAll: prefer nice DX in tests
 export * from 'stylis';
 
 export const CONTAINER = '@container';
@@ -35,8 +33,8 @@ export const cleanElement = <T extends Element & { siblings?: Element[] }>(
   return rest as T;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-type VisitorFunction = (element: Element) => typeof SKIP | void;
+// biome-ignore lint/suspicious/noConfusingVoidType: allow void return type
+type VisitorFunction = (element: Element) => typeof SKIP | void; // eslint-disable-line @typescript-eslint/no-invalid-void-type
 
 function visit(element: Element, visitor: VisitorFunction): void {
   if (visitor(element) === SKIP) return;
@@ -60,7 +58,6 @@ const cache = new WeakMap<Element[], Map<string, Element[]>>();
 
 function load(root: Element[]): void {
   const map = new Map<string, Element[]>();
-  let tmp: Element[] | undefined;
   cache.set(root, map);
 
   walk(root, (element) => {
@@ -82,9 +79,9 @@ function load(root: Element[]): void {
 
     if (element.type === RULESET) {
       for (const selector of element.props) {
-        // eslint-disable-next-line no-cond-assign
-        if ((tmp = map.get(selector))) {
-          tmp.push(element);
+        const elements = map.get(selector);
+        if (elements) {
+          elements.push(element);
         } else {
           map.set(selector, [element]);
         }

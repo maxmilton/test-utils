@@ -1,21 +1,21 @@
 import { describe, expect, mock, test } from 'bun:test';
 import * as stylisExports from 'stylis';
+import * as cssExports from '../src/css';
 import {
-  DECLARATION,
-  type Element,
-  RULESET,
   cleanElement,
   compile,
+  DECLARATION,
+  type Element,
   hexToRgb,
   isHexColor,
   isLightOrDark,
   linearize,
   lookup,
   luminance,
+  RULESET,
   reduce,
   walk,
 } from '../src/css';
-import * as cssExports from '../src/css';
 
 describe('exports', () => {
   const exports = [
