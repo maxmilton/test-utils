@@ -61,6 +61,77 @@ export function setupDOM(
   global.MutationObserver = window.MutationObserver;
   global.CSSStyleSheet = window.CSSStyleSheet;
   global.Text = window.Text;
+
+  // //////////////////////////
+
+  // global.window = dom;
+  // document[PropertySymbol.defaultView] = globalThis;
+
+  // //////////////////////////
+
+  // const window = new GlobalWindow(options);
+  // global.happyDOM = window.happyDOM;
+  // global.$console = originalConsole;
+
+  // const globals = [
+  //   'window',
+  //   'document',
+  //   'console',
+  //   'navigator',
+  //   'location',
+  //   'history',
+  //   'localStorage',
+  //   'fetch',
+  //   'setTimeout',
+  //   'clearTimeout',
+  //   'setInterval',
+  //   'clearInterval',
+  //   'queueMicrotask',
+  //   'requestAnimationFrame',
+  //   'cancelAnimationFrame',
+  //   'postMessage',
+  //   'dispatchEvent',
+  //   'addEventListener',
+  //   'removeEventListener',
+  //   'DocumentFragment',
+  //   'MutationObserver',
+  //   'CSSStyleSheet',
+  //   'Text',
+  // ];
+
+  // // Object.getOwnPropertyDescriptor
+  // for (const key of globals) {
+  //   // Object.defineProperty(global, key, {
+  //   //   get() {
+  //   //     return dom[key];
+  //   //   },
+  //   // });
+
+  //   const windowPropertyDescriptor = Object.getOwnPropertyDescriptor(
+  //     window,
+  //     key,
+  //   );
+  //   const globalPropertyDescriptor = Object.getOwnPropertyDescriptor(
+  //     globalThis,
+  //     key,
+  //   );
+
+  //   if (
+  //     globalPropertyDescriptor?.value === undefined ||
+  //     globalPropertyDescriptor.value !== windowPropertyDescriptor!.value
+  //   ) {
+  //     // If the property is the window object, replace it with the global object
+  //     if (windowPropertyDescriptor!.value === window) {
+  //       window[key] = globalThis;
+  //       windowPropertyDescriptor!.value = globalThis;
+  //     }
+
+  //     Object.defineProperty(globalThis, key, {
+  //       ...windowPropertyDescriptor,
+  //       configurable: true,
+  //     });
+  //   }
+  // }
 }
 
 export interface RenderResult {
