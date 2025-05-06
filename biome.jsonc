@@ -2,19 +2,16 @@
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "assist": {
-    "enabled": true,
     "actions": {
       "recommended": true,
       "source": { "useSortedProperties": "on" }
     }
   },
   "formatter": {
-    "enabled": true,
     "useEditorconfig": false,
     "indentStyle": "space"
   },
   "linter": {
-    "enabled": true,
     "rules": { "recommended": true }
   },
   "javascript": {
