@@ -61,7 +61,7 @@
     "stylis": "^4.3.6"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.0.0-beta.2",
+    "@biomejs/biome": "2.0.3",
     "@eslint/js": "9.26.0",
     "@maxmilton/eslint-config": "0.1.0",
     "@types/bun": "1.2.12",
