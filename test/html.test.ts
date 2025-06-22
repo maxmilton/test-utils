@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
-import * as htmlExports from '../src/html';
-import { validate } from '../src/html';
+import * as htmlExports from '../src/html.ts';
+import { validate } from '../src/html.ts';
 
 describe('exports', () => {
   const exports = ['validate'];

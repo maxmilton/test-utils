@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, max-classes-per-file, no-console, unicorn/consistent-function-scoping */
 
 import { describe, expect, spyOn, test } from 'bun:test';
-import * as extendExports from '../src/extend';
-import { parameters } from '../src/extend';
+import * as extendExports from '../src/extend.ts';
+import { parameters } from '../src/extend.ts';
 
 describe('exports', () => {
   const exports = ['parameters'];

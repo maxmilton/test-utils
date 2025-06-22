@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
-import * as spyExports from '../src/spy';
-import { performanceSpy } from '../src/spy';
+import * as spyExports from '../src/spy.ts';
+import { performanceSpy } from '../src/spy.ts';
 
 describe('exports', () => {
   const exports = ['performanceSpy'];

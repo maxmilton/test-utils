@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, spyOn, test } from 'bun:test';
 import { VirtualConsole } from 'happy-dom';
-import * as domExports from '../src/dom';
-import { cleanup, originalConsoleCtor, render } from '../src/dom';
-import { Test } from './TestComponent';
+import * as domExports from '../src/dom.ts';
+import { cleanup, originalConsoleCtor, render } from '../src/dom.ts';
+import { Test } from './TestComponent.ts';
 
 describe('exports', () => {
   const exports = ['cleanup', 'originalConsoleCtor', 'render', 'setupDOM'];

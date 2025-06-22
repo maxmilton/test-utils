@@ -1,6 +1,6 @@
 import { describe, expect, mock, test } from 'bun:test';
 import * as stylisExports from 'stylis';
-import * as cssExports from '../src/css';
+import * as cssExports from '../src/css.ts';
 import {
   cleanElement,
   compile,
@@ -15,7 +15,7 @@ import {
   RULESET,
   reduce,
   walk,
-} from '../src/css';
+} from '../src/css.ts';
 
 describe('exports', () => {
   const exports = [
