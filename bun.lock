@@ -16,7 +16,7 @@
         "eslint": "9.29.0",
         "eslint-plugin-unicorn": "59.0.1",
         "happy-dom": "18.0.1",
-        "stage1": "0.8.0-next.17",
+        "stage1": "0.8.0-next.19",
         "typescript": "5.8.3",
         "typescript-eslint": "8.34.1",
       },
@@ -311,7 +311,7 @@
 
     "shebang-regex": ["shebang-regex@3.0.0", "", {}, "sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A=="],
 
-    "stage1": ["stage1@0.8.0-next.17", "", {}, "sha512-vy9Lhf0QzZK4a6oQOETDlcIAC1IkxjaUgJE0Ch+mwFUALtreepStOnORWY0N/4fIx7VvU31TlORO2HKzswQiMQ=="],
+    "stage1": ["stage1@0.8.0-next.19", "", {}, "sha512-GansLifiFXtkWSfIauJ6a8P1qWccAL1UoHFOlJl3bUAMz7oufc5ilu4Li+iiVGrwuGB7Y0sKUOEBQnjJGCRjxA=="],
 
     "strip-indent": ["strip-indent@4.0.0", "", { "dependencies": { "min-indent": "^1.0.1" } }, "sha512-mnVSV2l+Zv6BLpSD/8V87CW/y9EmmbYzGCIavsnsI6/nwn26DwffM/yztm30Z/I2DY9wdS3vXVCMnHDgZaVNoA=="],
 
