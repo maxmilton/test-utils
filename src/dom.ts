@@ -6,7 +6,7 @@
 
 import { GlobalWindow, type Window } from 'happy-dom';
 
-/* eslint-disable no-var, vars-on-top */
+/* eslint-disable vars-on-top */
 declare global {
   /** Real bun console. `console` is mapped to happy-dom's virtual console. */
   var $console: Console;

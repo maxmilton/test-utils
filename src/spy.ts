@@ -8,7 +8,7 @@ import { expect, type Mock, spyOn } from 'bun:test';
 // const methods = Object.getOwnPropertyNames(performance) as (keyof Performance)[];
 //
 // export function performanceSpy(): () => void {
-//   const spies: Mock<() => void>[] = [];
+//   const spies: Mock<any>[] = [];
 //
 //   for (const method of methods) {
 //     spies.push(spyOn(performance, method));
@@ -38,7 +38,8 @@ const methods = [
 ] as (keyof Performance)[];
 
 export function performanceSpy(exclude: string[] = []): () => void {
-  const spies: Mock<() => void>[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const spies: Mock<any>[] = [];
   let happydomInternalNowCalls = 0;
 
   function now() {
