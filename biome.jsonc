@@ -9,30 +9,45 @@
   },
   "formatter": {
     "useEditorconfig": false,
+    "formatWithErrors": true,
     "indentStyle": "space"
   },
   "linter": {
-    "rules": { "recommended": true }
+    "domains": {
+      "project": "all"
+    },
+    "rules": {
+      "recommended": true,
+      "style": {
+        "noNonNullAssertion": "off"
+      },
+      "suspicious": {
+        "noAssignInExpressions": "off"
+      },
+      "nursery": {
+        "noUnresolvedImports": "off" // covered by TypeScript
+      }
+    }
   },
   "javascript": {
+    "globals": ["Bun"],
     "formatter": {
       "quoteStyle": "single"
     }
   },
   "overrides": [
     {
-      "includes": [".vscode/*.json", "package.json", "tsconfig*.json"],
-      "json": {
-        "parser": {
-          "allowComments": true,
-          "allowTrailingCommas": true
-        }
-      }
-    },
-    {
       "includes": ["**/*.spec.ts", "**/*.test.ts", "test/**"],
       "formatter": {
         "lineWidth": 100
+      },
+      "linter": {
+        "domains": {
+          "test": "all"
+        }
+      },
+      "javascript": {
+        "globals": ["$console", "Bun", "happyDOM", "Loader"]
       }
     }
   ]
