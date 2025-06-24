@@ -4,7 +4,7 @@
     "": {
       "name": "@maxmilton/test-utils",
       "dependencies": {
-        "@maxmilton/html-parser": "^0.0.11",
+        "@maxmilton/html-parser": "^0.0.12",
         "@types/stylis": "^4.2.7",
         "stylis": "^4.3.6",
       },
@@ -77,7 +77,7 @@
 
     "@maxmilton/eslint-config": ["@maxmilton/eslint-config@0.2.1", "", { "dependencies": { "confusing-browser-globals": "^1.0.11" }, "peerDependencies": { "@eslint/js": "^9.0.0", "eslint": "^9.0.0", "eslint-plugin-unicorn": ">=56.0.0", "typescript-eslint": "^8.0.0" }, "optionalPeers": ["eslint-plugin-unicorn"] }, "sha512-wgVbw2RYgPeMNNt0iOgxbBP4WpbYCh+6FaA3hIJEKkHp3EhUavuAVKrDUbTCpno2Yx3MaUbx4R8W59WBNNIDRw=="],
 
-    "@maxmilton/html-parser": ["@maxmilton/html-parser@0.0.11", "", {}, "sha512-sY7+kPdAgnQGdrLfNQOM1ZvhgL3E67ZPRhfdW3fCrNOEkKeg68Ad3iDv1gyXo1LVRa47rcPX1BqLkzkraZBu4Q=="],
+    "@maxmilton/html-parser": ["@maxmilton/html-parser@0.0.12", "", {}, "sha512-hrmgn5evsM1OpYF+iH5IEi/Z+ZKLmYAxSTVnehxypGERNkjhhp+MDPFeXmxPNKapru5F7XfvUGCXZgjkrM2q9g=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
