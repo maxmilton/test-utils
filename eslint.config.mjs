@@ -40,7 +40,5 @@ export default ts.config(
       'unicorn/prefer-query-selector': OFF,
     },
   },
-  {
-    ignores: ['**/*.bak', 'coverage/**', 'dist/**'],
-  },
+  { ignores: ['**/*.bak', 'coverage', 'dist'] },
 );
