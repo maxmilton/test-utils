@@ -3,7 +3,9 @@
     "biomejs.biome",
     "dbaeumer.vscode-eslint",
     "oven.bun-vscode",
+    "redhat.vscode-yaml",
     "stylelint.vscode-stylelint",
-    "tekumara.typos-vscode"
+    "tekumara.typos-vscode",
+    "yoavbls.pretty-ts-errors"
   ]
 }
