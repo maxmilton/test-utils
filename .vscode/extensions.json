@@ -2,6 +2,7 @@
   "recommendations": [
     "biomejs.biome",
     "dbaeumer.vscode-eslint",
+    "MylesMurphy.prettify-ts",
     "oven.bun-vscode",
     "redhat.vscode-yaml",
     "stylelint.vscode-stylelint",
