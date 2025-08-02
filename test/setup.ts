@@ -1,5 +1,5 @@
-import '../src/extend.ts';
+import "../src/extend.ts";
 
-import { setupDOM } from '../src/dom.ts';
+import { setupDOM } from "../src/dom.ts";
 
 setupDOM();

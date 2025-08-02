@@ -1,5 +1,5 @@
-import { collect, h } from 'stage1';
-import { compile } from 'stage1/macro' with { type: 'macro' };
+import { collect, h } from "stage1";
+import { compile } from "stage1/macro" with { type: "macro" };
 
 type TestComponent = HTMLDivElement;
 

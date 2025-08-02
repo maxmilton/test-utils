@@ -4,13 +4,13 @@
 
 /* eslint "@typescript-eslint/no-invalid-void-type": "warn" */
 
-import { GlobalWindow, type Window } from 'happy-dom';
+import { GlobalWindow, type Window } from "happy-dom";
 
 /* eslint-disable vars-on-top */
 declare global {
   /** Real bun console. `console` is mapped to happy-dom's virtual console. */
   var $console: Console;
-  var happyDOM: Window['happyDOM'];
+  var happyDOM: Window["happyDOM"];
 }
 /* eslint-enable */
 
@@ -74,29 +74,29 @@ export function setupDOM(
   // global.$console = originalConsole;
 
   // const globals = [
-  //   'window',
-  //   'document',
-  //   'console',
-  //   'navigator',
-  //   'location',
-  //   'history',
-  //   'localStorage',
-  //   'fetch',
-  //   'setTimeout',
-  //   'clearTimeout',
-  //   'setInterval',
-  //   'clearInterval',
-  //   'queueMicrotask',
-  //   'requestAnimationFrame',
-  //   'cancelAnimationFrame',
-  //   'postMessage',
-  //   'dispatchEvent',
-  //   'addEventListener',
-  //   'removeEventListener',
-  //   'DocumentFragment',
-  //   'MutationObserver',
-  //   'CSSStyleSheet',
-  //   'Text',
+  //   "window",
+  //   "document",
+  //   "console",
+  //   "navigator",
+  //   "location",
+  //   "history",
+  //   "localStorage",
+  //   "fetch",
+  //   "setTimeout",
+  //   "clearTimeout",
+  //   "setInterval",
+  //   "clearInterval",
+  //   "queueMicrotask",
+  //   "requestAnimationFrame",
+  //   "cancelAnimationFrame",
+  //   "postMessage",
+  //   "dispatchEvent",
+  //   "addEventListener",
+  //   "removeEventListener",
+  //   "DocumentFragment",
+  //   "MutationObserver",
+  //   "CSSStyleSheet",
+  //   "Text",
   // ];
 
   // // Object.getOwnPropertyDescriptor
@@ -151,7 +151,7 @@ export interface RenderResult {
 const mountedContainers = new Set<HTMLDivElement>();
 
 export function render(component: Node): RenderResult {
-  const container = document.createElement('div');
+  const container = document.createElement("div");
 
   container.appendChild(component);
   document.body.appendChild(container);
@@ -161,8 +161,8 @@ export function render(component: Node): RenderResult {
   return {
     container,
     debug(el = container) {
-      // const { format } = await import('prettier');
-      // const html = await format(el.innerHTML, { parser: 'html' });
+      // const { format } = await import("prettier");
+      // const html = await format(el.innerHTML, { parser: "html" });
       // $console.log(`DEBUG:\n${html}`);
 
       // FIXME: Replace with biome once it has a HTML parser
@@ -177,7 +177,7 @@ export function render(component: Node): RenderResult {
 
 export function cleanup(): void {
   if (mountedContainers.size === 0) {
-    throw new Error('No components mounted, did you forget to call render()?');
+    throw new Error("No components mounted, did you forget to call render()?");
   }
 
   for (const container of mountedContainers) {

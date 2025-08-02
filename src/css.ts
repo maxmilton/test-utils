@@ -11,14 +11,14 @@ import {
   RULESET,
   SCOPE,
   SUPPORTS,
-} from 'stylis';
+} from "stylis";
 
-export * from 'stylis';
+export * from "stylis";
 
-export const CONTAINER = '@container';
-export const STARTING_STYLE = '@starting-style';
+export const CONTAINER = "@container";
+export const STARTING_STYLE = "@starting-style";
 
-export const SKIP = Symbol('SKIP');
+export const SKIP = Symbol("SKIP");
 
 /**
  * Clones the element, stripping out references to other elements (e.g.,
@@ -62,7 +62,7 @@ function load(root: Element[]): void {
 
   walk(root, (element) => {
     // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
-    if (element.type[0] === '@') {
+    if (element.type[0] === "@") {
       switch (element.type) {
         case CONTAINER:
         case LAYER:
@@ -105,13 +105,13 @@ export function lookup(
   const ast = compile(`${cssSelector}{}`);
 
   if (ast.length !== 1 || ast[0].type !== RULESET) {
-    throw new TypeError('Expected a single CSS selector');
+    throw new TypeError("Expected a single CSS selector");
   }
 
   const selector = ast[0].props;
 
   if (selector.length !== 1) {
-    throw new TypeError('Expected a single CSS selector');
+    throw new TypeError("Expected a single CSS selector");
   }
 
   return cache.get(root)?.get(selector[0]);
@@ -141,12 +141,12 @@ export function reduce(elements: Element[]): Record<string, string> {
           decls[child.props as string] = child.children as string;
         } else {
           // eslint-disable-next-line no-console
-          console.warn('Unexpected child element type:', child.type);
+          console.warn("Unexpected child element type:", child.type);
         }
       }
     } else {
       // eslint-disable-next-line no-console
-      console.warn('Unexpected element type:', element.type);
+      console.warn("Unexpected element type:", element.type);
     }
   }
 
@@ -172,6 +172,6 @@ export function luminance([r, g, b]: [number, number, number]): number {
   return linearize(r) * 0.2126 + linearize(g) * 0.7152 + linearize(b) * 0.0722;
 }
 
-export function isLightOrDark(hexColor: string): 'light' | 'dark' {
-  return luminance(hexToRgb(hexColor)) > 0.179 ? 'light' : 'dark';
+export function isLightOrDark(hexColor: string): "light" | "dark" {
+  return luminance(hexToRgb(hexColor)) > 0.179 ? "light" : "dark";
 }

@@ -2,7 +2,7 @@
  * @file Extended matchers for Bun test.
  */
 
-import { expect } from 'bun:test';
+import { expect } from "bun:test";
 
 /**
  * Get the total number of parameters of a function including optional
@@ -14,20 +14,20 @@ import { expect } from 'bun:test';
  * @returns The number of parameters, including optional parameters.
  */
 export function parameters(func: unknown): number {
-  if (typeof func !== 'function') {
-    throw new TypeError('Expected a function');
+  if (typeof func !== "function") {
+    throw new TypeError("Expected a function");
   }
 
   const str = func.toString();
   const len = str.length;
-  const start = str.indexOf('(');
+  const start = str.indexOf("(");
   let index = start;
   let count = 1;
   let nested = 0;
   let char: string;
 
   // FIXME: Handle nested string template literals.
-  const string = (quote: '"' | "'" | '`') => {
+  const string = (quote: '"' | "'" | "`") => {
     while (index++ < len) {
       char = str[index];
 
@@ -35,7 +35,7 @@ export function parameters(func: unknown): number {
         break;
       }
       // skip escaped characters
-      if (char === '\\') {
+      if (char === "\\") {
         index++;
       }
     }
@@ -45,10 +45,10 @@ export function parameters(func: unknown): number {
     char = str[index];
 
     if (!nested) {
-      if (char === ')') {
+      if (char === ")") {
         break;
       }
-      if (char === ',') {
+      if (char === ",") {
         count++;
         continue; // eslint-disable-line no-continue
       }
@@ -57,17 +57,17 @@ export function parameters(func: unknown): number {
     switch (char) {
       case '"':
       case "'":
-      case '`':
+      case "`":
         string(char);
         break;
-      case '(':
-      case '[':
-      case '{':
+      case "(":
+      case "[":
+      case "{":
         nested++;
         break;
-      case ')':
-      case ']':
-      case '}':
+      case ")":
+      case "]":
+      case "}":
         nested--;
         break;
       default:
@@ -76,17 +76,17 @@ export function parameters(func: unknown): number {
   }
 
   if (index >= len || nested !== 0) {
-    throw new Error('Invalid function signature');
+    throw new Error("Invalid function signature");
   }
 
   // handle no parameters
   if (str.slice(start + 1, index).trim().length === 0) {
     // eslint-disable-next-line @typescript-eslint/prefer-includes, unicorn/prefer-includes
-    if (str.indexOf('[native code]', index) >= 0) {
+    if (str.indexOf("[native code]", index) >= 0) {
       count = func.length;
       // eslint-disable-next-line no-console
       console.warn(
-        'Optional parameters cannot be determined for native functions',
+        "Optional parameters cannot be determined for native functions",
       );
     } else {
       count = 0;
@@ -96,7 +96,7 @@ export function parameters(func: unknown): number {
   return count;
 }
 
-declare module 'bun:test' {
+declare module "bun:test" {
   interface Matchers {
     /** Asserts that a value is a plain `object`. */
     toBePlainObject(): void;
@@ -110,7 +110,7 @@ declare module 'bun:test' {
 expect.extend({
   // XXX: Bun's `toBeObject` matcher is the equivalent of `typeof x === 'object'`.
   toBePlainObject(received: unknown) {
-    return Object.prototype.toString.call(received) === '[object Object]'
+    return Object.prototype.toString.call(received) === "[object Object]"
       ? { pass: true }
       : {
           pass: false,
@@ -119,7 +119,7 @@ expect.extend({
   },
 
   toBeClass(received: unknown) {
-    return typeof received === 'function' &&
+    return typeof received === "function" &&
       /^class\s/.test(Function.prototype.toString.call(received))
       ? { pass: true }
       : {
@@ -129,7 +129,7 @@ expect.extend({
   },
 
   toHaveParameters(received: unknown, required: number, optional: number) {
-    if (typeof received !== 'function') {
+    if (typeof received !== "function") {
       return {
         pass: false,
         message: () => `expected ${String(received)} to be a function`,

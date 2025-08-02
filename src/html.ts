@@ -3,28 +3,28 @@ import {
   parse,
   SyntaxKind,
   walk,
-} from '@maxmilton/html-parser/src/index.ts';
+} from "@maxmilton/html-parser/src/index.ts";
 
 // https://html.spec.whatwg.org/multipage/syntax.html#void-elements
 const SELF_CLOSING_TAGS = new Set([
-  'area',
-  'base',
-  'br',
-  'col',
-  'embed',
-  'hr',
-  'img',
-  'input',
-  'link',
-  'meta',
-  'param',
-  'source',
-  'track',
-  'wbr',
-  '!doctype',
-  '',
-  '!',
-  '!--',
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr",
+  "!doctype",
+  "",
+  "!",
+  "!--",
 ]);
 
 interface ValidationError {
@@ -53,7 +53,7 @@ export function validate(html: string): {
 
         if (node.close === null && !SELF_CLOSING_TAGS.has(node.name)) {
           errors.push({
-            message: 'Unclosed tag',
+            message: "Unclosed tag",
             details: node.open,
           });
         }
@@ -62,12 +62,12 @@ export function validate(html: string): {
 
     if (ast.length === 0) {
       errors.push({
-        message: 'No HTML content found',
+        message: "No HTML content found",
       });
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     } else if (!hasTags) {
       errors.push({
-        message: 'No tags found',
+        message: "No tags found",
       });
     }
 
@@ -79,7 +79,7 @@ export function validate(html: string): {
   } catch (error) {
     return {
       valid: false,
-      errors: [{ message: 'Parse error', details: error }],
+      errors: [{ message: "Parse error", details: error }],
       ast: [],
     };
   }
