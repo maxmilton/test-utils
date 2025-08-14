@@ -1,9 +1,4 @@
-import {
-  type Node,
-  parse,
-  SyntaxKind,
-  walk,
-} from "@maxmilton/html-parser/src/index.ts";
+import { type Node, parse, SyntaxKind, walk } from "@maxmilton/html-parser/src/index.ts";
 
 // https://html.spec.whatwg.org/multipage/syntax.html#void-elements
 const SELF_CLOSING_TAGS = new Set([

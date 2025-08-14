@@ -85,9 +85,7 @@ export function parameters(func: unknown): number {
     if (str.indexOf("[native code]", index) >= 0) {
       count = func.length;
       // eslint-disable-next-line no-console
-      console.warn(
-        "Optional parameters cannot be determined for native functions",
-      );
+      console.warn("Optional parameters cannot be determined for native functions");
     } else {
       count = 0;
     }

@@ -14,13 +14,8 @@ declare global {
 }
 /* eslint-enable */
 
-type AbstractConstructorHelper<T> = (new (
-  ...args: unknown[]
-) => Record<string, unknown>) &
-  T;
-type AbstractConstructorParameters<T> = ConstructorParameters<
-  AbstractConstructorHelper<T>
->;
+type AbstractConstructorHelper<T> = (new (...args: unknown[]) => Record<string, unknown>) & T;
+type AbstractConstructorParameters<T> = ConstructorParameters<AbstractConstructorHelper<T>>;
 
 export const originalConsoleCtor = global.console.Console;
 const originalConsole = global.console;
@@ -31,9 +26,7 @@ const originalConsole = global.console;
  * Takes the same options as happy-dom's Window constructor.
  * @see https://github.com/capricorn86/happy-dom/wiki/Window
  */
-export function setupDOM(
-  options?: AbstractConstructorParameters<typeof Window>[0],
-): void {
+export function setupDOM(options?: AbstractConstructorParameters<typeof Window>[0]): void {
   const dom = new GlobalWindow(options);
   global.happyDOM = dom.happyDOM;
   global.$console = originalConsole;

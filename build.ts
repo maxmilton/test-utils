@@ -8,13 +8,7 @@ console.timeEnd("prebuild");
 
 console.time("build");
 const out = await Bun.build({
-  entrypoints: [
-    "src/css.ts",
-    "src/dom.ts",
-    "src/extend.ts",
-    "src/html.ts",
-    "src/spy.ts",
-  ],
+  entrypoints: ["src/css.ts", "src/dom.ts", "src/extend.ts", "src/html.ts", "src/spy.ts"],
   outdir: "dist",
   target: "bun",
   external: ["@maxmilton/html-parser", "happy-dom", "stylis"],
@@ -34,17 +28,11 @@ const config: ts.CompilerOptions = {
   skipLibCheck: true,
 };
 const result = ts
-  .createProgram(
-    ["src/css.ts", "src/dom.ts", "src/extend.ts", "src/html.ts", "src/spy.ts"],
-    config,
-  )
+  .createProgram(["src/css.ts", "src/dom.ts", "src/extend.ts", "src/html.ts", "src/spy.ts"], config)
   .emit(undefined, undefined, undefined, true);
 if (result.emitSkipped) {
   console.error(
-    ts.formatDiagnosticsWithColorAndContext(
-      result.diagnostics,
-      ts.createCompilerHost(config),
-    ),
+    ts.formatDiagnosticsWithColorAndContext(result.diagnostics, ts.createCompilerHost(config)),
   );
   process.exitCode = 1;
 }
