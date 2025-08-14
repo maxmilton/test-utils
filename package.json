@@ -2,9 +2,9 @@
   "name": "@maxmilton/test-utils",
   "version": "0.0.12",
   "description": "Test utilities with support for Bun, CSS, stage1, and more",
-  "repository": "maxmilton/test-utils",
+  "repository": "github:maxmilton/test-utils",
   "homepage": "https://github.com/maxmilton/test-utils",
-  "author": "Max Milton <max@bunnybunny.org>",
+  "author": "Max Milton <max@2okki.com>",
   "license": "MIT",
   "type": "module",
   "exports": {
