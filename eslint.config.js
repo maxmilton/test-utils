@@ -3,9 +3,6 @@ import mm from "@maxmilton/eslint-config";
 import unicorn from "eslint-plugin-unicorn";
 import ts from "typescript-eslint";
 
-const OFF = 0;
-const ERROR = 2;
-
 export default ts.config(
   js.configs.recommended,
   ts.configs.strictTypeChecked,
@@ -14,7 +11,7 @@ export default ts.config(
   mm.configs.recommended,
   {
     linterOptions: {
-      reportUnusedDisableDirectives: ERROR,
+      reportUnusedDisableDirectives: "error",
     },
     languageOptions: {
       parserOptions: {
@@ -23,17 +20,11 @@ export default ts.config(
       },
     },
     rules: {
-      quotes: [ERROR, "double", { avoidEscape: true }],
-
-      // clearer code when used mindfully
-      "no-plusplus": OFF,
-      "unicorn/switch-case-braces": OFF,
-
-      // prefer to clearly separate Bun and DOM
-      "unicorn/prefer-global-this": OFF,
-
-      // better performance
-      "unicorn/prefer-dom-node-append": OFF,
+      "no-plusplus": "off", // clearer code when used mindfully
+      quotes: ["error", "double", { avoidEscape: true }],
+      "unicorn/prefer-dom-node-append": "off", // better performance
+      "unicorn/prefer-global-this": "off", // prefer to clearly separate Bun and DOM
+      "unicorn/switch-case-braces": "off",
     },
   },
   { ignores: ["**/*.bak", "coverage", "dist"] },
