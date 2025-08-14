@@ -8,9 +8,8 @@
     }
   },
   "formatter": {
-    "useEditorconfig": false,
-    "formatWithErrors": true,
-    "indentStyle": "space"
+    "indentStyle": "space",
+    "lineWidth": 100
   },
   "linter": {
     "domains": {
@@ -36,9 +35,6 @@
   "overrides": [
     {
       "includes": ["**/*.spec.ts", "**/*.test.ts", "test/**"],
-      "formatter": {
-        "lineWidth": 100
-      },
       "linter": {
         "domains": {
           "test": "all"
