@@ -8,5 +8,6 @@
     "stylelint.vscode-stylelint",
     "tekumara.typos-vscode",
     "yoavbls.pretty-ts-errors"
-  ]
+  ],
+  "unwantedRecommendations": ["dprint.dprint", "esbenp.prettier-vscode"]
 }
