@@ -60,7 +60,7 @@ describe("matcher: toBePlainObject", () => {
     false,
     undefined,
     Symbol("sym"),
-    BigInt(1234),
+    BigInt(1234), // eslint-disable-line unicorn/prefer-bigint-literals
     NaN, // eslint-disable-line unicorn/prefer-number-properties
     Infinity,
   ];
@@ -99,7 +99,7 @@ describe("matcher: toBeClass", () => {
     false,
     undefined,
     Symbol("sym"),
-    BigInt(1234),
+    BigInt(1234), // eslint-disable-line unicorn/prefer-bigint-literals
     NaN, // eslint-disable-line unicorn/prefer-number-properties
     Infinity,
     {},
@@ -1212,7 +1212,7 @@ describe("parameters", () => {
       ["Number.NEGATIVE_INFINITY", Number.NEGATIVE_INFINITY],
       ["Number.NaN", Number.NaN],
       ["Symbol('sym')", Symbol("sym")],
-      ["BigInt(1234)", BigInt(1234)],
+      ["BigInt(1234)", BigInt(1234)], // eslint-disable-line unicorn/prefer-bigint-literals
       ["[]", []],
       ["{}", {}],
       ["<empty string>", ""],
