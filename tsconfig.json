@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "allowJs": true, // type=module
     "checkJs": true,
+    "maxNodeModuleJsDepth": 2,
     "noEmit": true,
 
     "strict": true,

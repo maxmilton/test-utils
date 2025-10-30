@@ -8,6 +8,7 @@ export default defineConfig(
   js.configs.recommended,
   ts.configs.strictTypeChecked,
   ts.configs.stylisticTypeChecked,
+  // @ts-expect-error - broken upstream types
   unicorn.configs.recommended,
   mm.configs.recommended,
   {
@@ -22,7 +23,6 @@ export default defineConfig(
     },
     rules: {
       "no-plusplus": "off", // clearer code when used mindfully
-      quotes: ["error", "double", { avoidEscape: true }],
       "unicorn/prefer-dom-node-append": "off", // better performance
       "unicorn/prefer-global-this": "off", // prefer to clearly separate Bun and DOM
       "unicorn/switch-case-braces": "off",
