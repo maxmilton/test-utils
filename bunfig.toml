@@ -1,12 +1,6 @@
-telemetry = false
-
-[run]
-bun = true
-
 [install]
 auto = "disable"
 
 [test]
 preload = ["./test/setup.ts"]
 root = "./test"
-coverage = true

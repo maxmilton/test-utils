@@ -45,7 +45,8 @@
     "lint:fmt": "biome check",
     "lint:js": "eslint",
     "lint:ts": "tsc --noEmit",
-    "test": "bun test"
+    "test": "bun test --only-failures",
+    "test:ci": "bun test --coverage --random --rerun-each=3"
   },
   "peerDependencies": {
     "happy-dom": ">=14.0.0 <21.0.0"
