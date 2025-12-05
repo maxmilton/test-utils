@@ -1,6 +1,6 @@
 {
   "name": "@maxmilton/test-utils",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Test utilities with support for Bun, CSS, stage1, and more",
   "repository": "github:maxmilton/test-utils",
   "bugs": "https://github.com/maxmilton/test-utils/issues",
