@@ -65,6 +65,19 @@ describe("matcher: toBePlainObject", () => {
     Infinity,
   ];
 
+  test("expect() has matcher", () => {
+    expect.assertions(1);
+    expect(expect()).toHaveProperty("toBePlainObject");
+  });
+
+  test("matcher is a function", () => {
+    expect.assertions(2);
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const matcher = expect().toBePlainObject;
+    expect(matcher).toBeFunction();
+    expect(matcher).not.toBeClass();
+  });
+
   test.each(plainObjects)("matches plain object %#", (item) => {
     expect.assertions(1);
     expect(item).toBePlainObject();
@@ -142,6 +155,19 @@ describe("matcher: toBeClass", () => {
     Buffer,
   ];
 
+  test("expect() has matcher", () => {
+    expect.assertions(1);
+    expect(expect()).toHaveProperty("toBeClass");
+  });
+
+  test("matcher is a function", () => {
+    expect.assertions(2);
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const matcher = expect().toBeClass;
+    expect(matcher).toBeFunction();
+    expect(matcher).not.toBeClass();
+  });
+
   test.each(classes)("matches class %#: %p", (item) => {
     expect.assertions(1);
     expect(item).toBeClass();
@@ -150,6 +176,100 @@ describe("matcher: toBeClass", () => {
   test.each(notClasses)("does not match non-class %#: %p", (item) => {
     expect.assertions(1);
     expect(item).not.toBeClass();
+  });
+});
+
+describe("matcher: toHaveObjectType", () => {
+  const samples: [text: string, prototype: string, value: unknown][] = [
+    ["null", "[object Null]", null],
+    ["undefined", "[object Undefined]", undefined],
+    ["true", "[object Boolean]", true],
+    ["false", "[object Boolean]", false],
+    ["-1", "[object Number]", -1],
+    ["0", "[object Number]", 0],
+    ["1", "[object Number]", 1],
+    ["Number.MAX_VALUE", "[object Number]", Number.MAX_VALUE],
+    ["Number.POSITIVE_INFINITY", "[object Number]", Number.POSITIVE_INFINITY],
+    ["Number.NEGATIVE_INFINITY", "[object Number]", Number.NEGATIVE_INFINITY],
+    ["Number.NaN", "[object Number]", Number.NaN],
+    ["Symbol('sym')", "[object Symbol]", Symbol("sym")],
+    ["BigInt(1234)", "[object BigInt]", BigInt(1234)], // eslint-disable-line unicorn/prefer-bigint-literals
+    ["[]", "[object Array]", []],
+    ["{}", "[object Object]", {}],
+    ["<empty string>", "[object String]", ""],
+    ["Function", "[object Function]", Function],
+    ["Object", "[object Function]", Object],
+    ["Array", "[object Function]", Array],
+    ["String", "[object Function]", String],
+    ["Number", "[object Function]", Number],
+    ["Boolean", "[object Function]", Boolean],
+    ["Symbol", "[object Function]", Symbol],
+    ["BigInt", "[object Function]", BigInt],
+    ["Buffer", "[object Function]", Buffer],
+    ["Function.prototype", "[object Function]", Function.prototype],
+    ["new Int8Array()", "[object Int8Array]", new Int8Array()],
+    ["new Uint8Array()", "[object Uint8Array]", new Uint8Array()],
+    ["new Uint8ClampedArray()", "[object Uint8ClampedArray]", new Uint8ClampedArray()],
+    ["new Int16Array()", "[object Int16Array]", new Int16Array()],
+    ["new Uint16Array()", "[object Uint16Array]", new Uint16Array()],
+    ["new Int32Array()", "[object Int32Array]", new Int32Array()],
+    ["new Uint32Array()", "[object Uint32Array]", new Uint32Array()],
+    ["new Float32Array()", "[object Float32Array]", new Float32Array()],
+    ["new Float64Array()", "[object Float64Array]", new Float64Array()],
+    ["new BigInt64Array()", "[object BigInt64Array]", new BigInt64Array()],
+    ["new BigUint64Array()", "[object BigUint64Array]", new BigUint64Array()],
+    ["new Map()", "[object Map]", new Map()],
+    ["new Set()", "[object Set]", new Set()],
+    ["new WeakMap()", "[object WeakMap]", new WeakMap()],
+    ["new WeakSet()", "[object WeakSet]", new WeakSet()],
+    ["new Promise(() => {})", "[object Promise]", new Promise(() => {})],
+    ["new Date()", "[object Date]", new Date()],
+    ["/(?:)/", "[object RegExp]", /(?:)/],
+    ["new Error()", "[object Error]", new Error()], // eslint-disable-line unicorn/error-message
+    ["Math", "[object Math]", Math],
+    ["JSON", "[object JSON]", JSON],
+    ["Intl", "[object Intl]", Intl],
+    ["Object.prototype", "[object Object]", Object.prototype],
+    ["Array.prototype", "[object Array]", Array.prototype],
+    ["String.prototype", "[object String]", String.prototype],
+    ["Number.prototype", "[object Number]", Number.prototype],
+    ["Boolean.prototype", "[object Boolean]", Boolean.prototype],
+    ["Symbol.prototype", "[object Symbol]", Symbol.prototype],
+    ["BigInt.prototype", "[object BigInt]", BigInt.prototype],
+    // TODO: Should be "[object console]" but happy-dom returns "[object Object]".
+    // ["console", "[object console]", console],
+    ["console", "[object Object]", console],
+    // TODO: Should be "[object Window]" but happy-dom returns "[object EventTarget]".
+    // ["window", "[object Window]", window],
+    ["window", "[object EventTarget]", window],
+    ["document", "[object HTMLDocument]", document],
+    ["process", "[object process]", process],
+    ["global", "[object Object]", global],
+    ["globalThis", "[object Object]", globalThis],
+    // TODO: Should be "[object Window]" but happy-dom returns "[object Object]".
+    // ["self", "[object Window]", self],
+    // eslint-disable-next-line no-restricted-globals
+    ["self", "[object Object]", self],
+    ["this", "[object Null]", this],
+    ["* import", "[object Module]", extendExports], // bun only
+  ] as const;
+
+  test("expect() has matcher", () => {
+    expect.assertions(1);
+    expect(expect()).toHaveProperty("toHaveObjectType");
+  });
+
+  test("matcher is a function", () => {
+    expect.assertions(2);
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const matcher = expect().toHaveObjectType;
+    expect(matcher).toBeFunction();
+    expect(matcher).not.toBeClass();
+  });
+
+  test.each(samples)('%s has prototype "%s"', (_text, prototype, value) => {
+    expect.assertions(1);
+    expect(value).toHaveObjectType(prototype);
   });
 });
 
@@ -269,14 +389,26 @@ describe("matcher: toHaveParameters", () => {
     [0, 3, async (_a = 1, _b = 2, ..._rest: unknown[]) => {}],
   ];
 
-  test.each(funcs)(
-    "matches function %# with %i required and %i optional parameters",
-    (required, optional, func) => {
-      expect.assertions(2);
-      expect(func).toHaveParameters(required, optional);
-      expect(func).toHaveLength(required);
-    },
-  );
+  test("expect() has matcher", () => {
+    expect.assertions(1);
+    expect(expect()).toHaveProperty("toHaveParameters");
+  });
+
+  test("matcher is a function", () => {
+    expect.assertions(2);
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const matcher = expect().toHaveParameters;
+    expect(matcher).toBeFunction();
+    expect(matcher).not.toBeClass();
+  });
+
+  test.each(
+    funcs,
+  )("matches function %# with %i required and %i optional parameters", (required, optional, func) => {
+    expect.assertions(2);
+    expect(func).toHaveParameters(required, optional);
+    expect(func).toHaveLength(required);
+  });
 
   // TODO: Add test for failing case when passing non-function once bun supports it
 });
@@ -591,8 +723,8 @@ describe("parameters", () => {
 
     test("escaped all", () => {
       expect.assertions(1);
-      // eslint-disable-next-line no-useless-escape
-      function foo(_a = "'\"\`", _b = "") {}
+      // biome-ignore lint/suspicious/noUselessEscapeInString: used in test
+      function foo(_a = "'\"\`", _b = "") {} // eslint-disable-line no-useless-escape
       expect(parameters(foo)).toBe(2);
     });
   });
@@ -660,6 +792,7 @@ describe("parameters", () => {
   describe("scope and shadowing", () => {
     test("case 1", () => {
       expect.assertions(1);
+      // biome-ignore lint/correctness/noUnusedVariables: used for test
       const x = 1;
       // eslint-disable-next-line @typescript-eslint/no-shadow
       function foo(x: unknown) {
@@ -680,12 +813,14 @@ describe("parameters", () => {
   describe("non-ASCII identifiers", () => {
     test("case 1", () => {
       expect.assertions(1);
+      // biome-ignore lint/correctness/noUnusedFunctionParameters: used for test
       function 𝑓𝑜𝑜(𝑎: unknown, 𝑏: unknown) {}
       expect(parameters(𝑓𝑜𝑜)).toBe(2);
     });
 
     test("case 2", () => {
       expect.assertions(1);
+      // biome-ignore lint/correctness/noUnusedFunctionParameters: used for test
       const 𝑓𝑜𝑜 = (𝑎: unknown, 𝑏: unknown) => {};
       expect(parameters(𝑓𝑜𝑜)).toBe(2);
     });
@@ -720,6 +855,7 @@ describe("parameters", () => {
     test("basic", () => {
       expect.assertions(1);
       function foo(_a: unknown, _b: unknown) {
+        // biome-ignore lint/complexity/noArguments: used for test
         console.log(arguments); // eslint-disable-line prefer-rest-params
       }
       expect(parameters(foo)).toBe(2);
@@ -1254,6 +1390,7 @@ describe("parameters", () => {
       // eslint-disable-next-line no-restricted-globals
       ["self", self],
       ["this", this],
+      // biome-ignore lint/complexity/noArguments: used in tests
       ["arguments", arguments], // eslint-disable-line prefer-rest-params
       ["new.target", new.target],
 

@@ -100,13 +100,17 @@ declare module "bun:test" {
     toBePlainObject(): void;
     /** Asserts that a value is a `class`. */
     toBeClass(): void;
+    /**
+     * Asserts that a value has a specific object type. String form of type as
+     * would be returned from `Object.prototype.toString.call(x)`.
+     */
+    toHaveObjectType(prototype: string): void;
     /** Asserts that a function has a specific number of parameters. */
     toHaveParameters(required: number, optional: number): void;
   }
 }
 
 expect.extend({
-  // XXX: Bun's `toBeObject` matcher is the equivalent of `typeof x === 'object'`.
   toBePlainObject(received: unknown) {
     return Object.prototype.toString.call(received) === "[object Object]"
       ? { pass: true }
@@ -117,13 +121,27 @@ expect.extend({
   },
 
   toBeClass(received: unknown) {
-    return typeof received === "function" &&
-      /^class\s/.test(Function.prototype.toString.call(received))
+    return typeof received === "function"
+      && /^class\s/.test(Function.prototype.toString.call(received))
       ? { pass: true }
       : {
           pass: false,
           message: () => `expected ${String(received)} to be a class`,
         };
+  },
+
+  toHaveObjectType(received: unknown, type: string) {
+    try {
+      const actual = Object.prototype.toString.call(received);
+      return actual === type
+        ? { pass: true }
+        : {
+            pass: false,
+            message: () => `expected value to have object type "${type}" but is "${actual}"`,
+          };
+    } catch {
+      return { pass: false, message: () => `Unable to get object type of ${String(received)}` };
+    }
   },
 
   toHaveParameters(received: unknown, required: number, optional: number) {
