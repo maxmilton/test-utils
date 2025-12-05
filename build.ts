@@ -7,7 +7,7 @@ await Bun.$`rm -rf dist`;
 console.timeEnd("prebuild");
 
 console.time("build");
-const out = await Bun.build({
+await Bun.build({
   entrypoints: ["src/css.ts", "src/dom.ts", "src/extend.ts", "src/html.ts", "src/spy.ts"],
   outdir: "dist",
   target: "bun",
@@ -16,8 +16,6 @@ const out = await Bun.build({
   sourcemap: "linked",
 });
 console.timeEnd("build");
-console.log(out.outputs);
-if (!out.success) throw new AggregateError(out.logs, "Build failed");
 
 console.time("dts");
 const config: ts.CompilerOptions = {
@@ -27,12 +25,12 @@ const config: ts.CompilerOptions = {
   declarationDir: "dist",
   skipLibCheck: true,
 };
-const result = ts
+const { emitSkipped, diagnostics } = ts
   .createProgram(["src/css.ts", "src/dom.ts", "src/extend.ts", "src/html.ts", "src/spy.ts"], config)
   .emit(undefined, undefined, undefined, true);
-if (result.emitSkipped) {
+if (emitSkipped) {
   console.error(
-    ts.formatDiagnosticsWithColorAndContext(result.diagnostics, ts.createCompilerHost(config)),
+    ts.formatDiagnosticsWithColorAndContext(diagnostics, ts.createCompilerHost(config)),
   );
   process.exitCode = 1;
 }

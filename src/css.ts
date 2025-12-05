@@ -16,6 +16,7 @@ export const SKIP = Symbol("SKIP");
  * "parent") for cleaner logging. **Intended for debugging only.**
  */
 export const cleanElement = <T extends Element & { siblings?: Element[] }>(element: T): T => {
+  // biome-ignore lint/correctness/noUnusedVariables: partially pick/discard keys
   const { root, parent, children, siblings, ...rest } = element;
   // @ts-expect-error - TODO: Fix "children" prop type
   rest.children = Array.isArray(children) ? children.length : children;
