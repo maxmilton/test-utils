@@ -1,40 +1,29 @@
 {
   "biome.enabled": true,
-  "css.validate": false,
   "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
   "editor.formatOnType": false,
   "editor.tabSize": 2,
   "eslint.enable": true,
-  "files.associations": {
-    "*.css": "tailwindcss",
-    "*.xcss": "scss"
-  },
   "git.branchProtection": ["master"],
-  "js/ts.implicitProjectConfig.checkJs": true,
-  "prettier.enable": false, // use biome instead
-  "scss.validate": false,
-  "stylelint.validate": ["css", "scss"],
+  "prettier.enable": false, // use biome
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "yaml.validate": true,
 
-  "[css][html][json][jsonc][markdown][scss]": {
+  "[css][graphql][html][json][jsonc][markdown]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit",
       "source.fixAll": "explicit"
     },
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "[javascript][typescript]": {
+  "[javascript][javascriptreact][typescript][typescriptreact]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": "never",
       "source.organizeImports.biome": "explicit",
       "source.fixAll": "never"
     },
     "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
   }
 }
