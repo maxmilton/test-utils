@@ -13,6 +13,7 @@ export default defineConfig(
   {
     linterOptions: {
       reportUnusedDisableDirectives: "error",
+      reportUnusedInlineConfigs: "error",
     },
     languageOptions: {
       parserOptions: {
@@ -24,8 +25,8 @@ export default defineConfig(
       "no-plusplus": "off", // clearer code when used mindfully
       "unicorn/prefer-dom-node-append": "off", // better performance
       "unicorn/prefer-global-this": "off", // prefer to clearly separate Bun and DOM
-      "unicorn/switch-case-braces": "off",
+      "unicorn/switch-case-braces": ["error", "avoid"], // byte savings when minification doesn't remove
     },
   },
-  { ignores: ["**/*.bak", "coverage", "dist"] },
+  { ignores: ["dist"] },
 );

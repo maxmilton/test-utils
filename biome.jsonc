@@ -23,16 +23,25 @@
       "suspicious": {
         "noAssignInExpressions": "off",
         "noConstEnum": "off"
-      },
-      "nursery": {
-        "noUnresolvedImports": "off" // covered by typescript
       }
     }
   },
   "javascript": {
-    "globals": ["Bun"]
+    "globals": ["Bun"],
+    "formatter": {
+      "operatorLinebreak": "before"
+    }
   },
   "overrides": [
+    {
+      "includes": ["**/*.jsonc", ".vscode/*.json", "tsconfig.json"],
+      "json": {
+        "parser": {
+          "allowComments": true,
+          "allowTrailingCommas": true
+        }
+      }
+    },
     {
       "includes": ["**/*.spec.ts", "**/*.test.ts", "test/**"],
       "linter": {
