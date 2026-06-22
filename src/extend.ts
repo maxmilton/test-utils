@@ -18,9 +18,14 @@ export function parameters(func: unknown): number {
     throw new TypeError("Expected a function");
   }
 
-  const str = func.toString();
+  const str = Function.prototype.toString.call(func);
+  const isClassConstructor = /^class\s/.test(str);
   const len = str.length;
-  const start = str.indexOf("(");
+  // Special handling for ES classes: str contains the entire class, so we must
+  // locate the constructor's start because other methods may appear before it.
+  const start = isClassConstructor
+    ? str.indexOf("constructor(") + "constructor".length
+    : str.indexOf("(");
   let index = start;
   let count = 1;
   let nested = 0;
