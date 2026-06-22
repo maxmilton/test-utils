@@ -258,6 +258,7 @@ describe("cleanElement", () => {
 
   test('leaves "children" property alone when children is not array', () => {
     expect.assertions(5);
+    // eslint-disable-next-line unicorn/better-dom-traversing
     const element = ast[0].children[0] as Element;
     expect(element).toBePlainObject();
     expect(element.type).toBe(DECLARATION);

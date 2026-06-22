@@ -59,18 +59,22 @@ export function parameters(func: unknown): number {
       case "'":
       case "`":
         string(char);
+        // eslint-disable-next-line unicorn/no-break-in-nested-loop
         break;
       case "(":
       case "[":
       case "{":
         nested++;
+        // eslint-disable-next-line unicorn/no-break-in-nested-loop
         break;
       case ")":
       case "]":
       case "}":
         nested--;
+        // eslint-disable-next-line unicorn/no-break-in-nested-loop
         break;
       default:
+        // eslint-disable-next-line unicorn/no-break-in-nested-loop
         break;
     }
   }
@@ -110,6 +114,7 @@ declare module "bun:test" {
   }
 }
 
+// eslint-disable-next-line unicorn/no-top-level-side-effects
 expect.extend({
   toBePlainObject(received: unknown) {
     return Object.prototype.toString.call(received) === "[object Object]"
