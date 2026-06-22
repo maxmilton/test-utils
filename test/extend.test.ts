@@ -61,7 +61,7 @@ describe("matcher: toBePlainObject", () => {
     undefined,
     Symbol("sym"),
     BigInt(1234), // eslint-disable-line unicorn/prefer-bigint-literals
-    NaN, // eslint-disable-line unicorn/prefer-number-properties
+    NaN,
     Infinity,
   ];
 
@@ -113,7 +113,7 @@ describe("matcher: toBeClass", () => {
     undefined,
     Symbol("sym"),
     BigInt(1234), // eslint-disable-line unicorn/prefer-bigint-literals
-    NaN, // eslint-disable-line unicorn/prefer-number-properties
+    NaN,
     Infinity,
     {},
     { foo: "bar" },
@@ -189,9 +189,9 @@ describe("matcher: toHaveObjectType", () => {
     ["0", "[object Number]", 0],
     ["1", "[object Number]", 1],
     ["Number.MAX_VALUE", "[object Number]", Number.MAX_VALUE],
-    ["Number.POSITIVE_INFINITY", "[object Number]", Number.POSITIVE_INFINITY],
-    ["Number.NEGATIVE_INFINITY", "[object Number]", Number.NEGATIVE_INFINITY],
-    ["Number.NaN", "[object Number]", Number.NaN],
+    ["Infinity", "[object Number]", Infinity],
+    ["-Infinity", "[object Number]", -Infinity],
+    ["NaN", "[object Number]", NaN],
     ["Symbol('sym')", "[object Symbol]", Symbol("sym")],
     ["BigInt(1234)", "[object BigInt]", BigInt(1234)], // eslint-disable-line unicorn/prefer-bigint-literals
     ["[]", "[object Array]", []],
@@ -250,7 +250,7 @@ describe("matcher: toHaveObjectType", () => {
     // ["self", "[object Window]", self],
     // eslint-disable-next-line no-restricted-globals
     ["self", "[object Object]", self],
-    ["this", "[object Null]", this],
+    ["this", "[object Null]", this], // eslint-disable-line unicorn/no-this-outside-of-class
     ["* import", "[object Module]", extendExports], // bun only
   ] as const;
 
@@ -583,7 +583,7 @@ describe("parameters", () => {
 
     test("case 4", () => {
       expect.assertions(1);
-      // eslint-disable-next-line unicorn/no-object-as-default-parameter
+      // eslint-disable-next-line @typescript-eslint/no-useless-default-assignment, unicorn/no-object-as-default-parameter
       function foo({ _a = 1, _b = 2 } = { _a: 5 }, [_c = 3, _d = 4] = [6]) {}
       expect(parameters(foo)).toBe(2);
     });
@@ -674,6 +674,7 @@ describe("parameters", () => {
     test("nested string template literals simple", () => {
       expect.assertions(1);
       // NOTE: Bun optimizes simple template literals into a single string
+      // eslint-disable-next-line unicorn/no-useless-template-literals
       function foo(_a = `x,${`y,${`z,`},`},`, _b = ``) {} // eslint-disable-line @typescript-eslint/no-unnecessary-template-expression, quotes
       expect(parameters(foo)).toBe(2);
     });
@@ -777,6 +778,7 @@ describe("parameters", () => {
         _d = Date.now(),
         _e = z,
         _f = z + 1 - (2 * 3) / 4,
+        // eslint-disable-next-line unicorn/prefer-number-coercion
         _g = Number.parseInt("123.456", 10),
         _h: unknown,
         _i = `,${String(z)},${String(z)},${String(z)},`,
@@ -1135,9 +1137,9 @@ describe("parameters", () => {
       test("case 1: constructor", () => {
         expect.assertions(1);
         class Foo {
+          static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
           // biome-ignore lint/complexity/noUselessConstructor: simple test case
           constructor(_a: unknown, _b: unknown) {}
-          static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
         expect(parameters(Foo)).toBe(2);
       });
@@ -1145,9 +1147,9 @@ describe("parameters", () => {
       test("case 2: method parameters", () => {
         expect.assertions(1);
         class Foo {
+          static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
           // biome-ignore lint/complexity/noUselessConstructor: simple test case
           constructor(_a: unknown, _b: unknown) {}
-          static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1164,12 +1166,12 @@ describe("parameters", () => {
       test("case 4: generator method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
-          constructor(_a: unknown, _b: unknown) {}
           // eslint-disable-next-line generator-star-spacing
           static *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             yield null;
           }
+          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1177,11 +1179,11 @@ describe("parameters", () => {
       test("case 5: async method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
-          constructor(_a: unknown, _b: unknown) {}
           static async method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             await Promise.resolve();
           }
+          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1189,13 +1191,13 @@ describe("parameters", () => {
       test("case 6: async generator method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
-          constructor(_a: unknown, _b: unknown) {}
           // eslint-disable-next-line generator-star-spacing
           static async *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             await Promise.resolve();
             yield null;
           }
+          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1205,9 +1207,9 @@ describe("parameters", () => {
         expect(
           parameters(
             class {
+              static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
               // biome-ignore lint/complexity/noUselessConstructor: simple test case
               constructor(_a: unknown, _b: unknown) {}
-              static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
             }.method,
           ),
         ).toBe(3);
@@ -1344,9 +1346,9 @@ describe("parameters", () => {
       ["0", 0],
       ["1", 1],
       ["Number.MAX_VALUE", Number.MAX_VALUE],
-      ["Number.POSITIVE_INFINITY", Number.POSITIVE_INFINITY],
-      ["Number.NEGATIVE_INFINITY", Number.NEGATIVE_INFINITY],
-      ["Number.NaN", Number.NaN],
+      ["Infinity", Infinity],
+      ["-Infinity", -Infinity],
+      ["NaN", NaN],
       ["Symbol('sym')", Symbol("sym")],
       ["BigInt(1234)", BigInt(1234)], // eslint-disable-line unicorn/prefer-bigint-literals
       ["[]", []],
@@ -1389,7 +1391,7 @@ describe("parameters", () => {
       ["globalThis", globalThis],
       // eslint-disable-next-line no-restricted-globals
       ["self", self],
-      ["this", this],
+      ["this", this], // eslint-disable-line unicorn/no-this-outside-of-class
       // biome-ignore lint/complexity/noArguments: used in tests
       ["arguments", arguments], // eslint-disable-line prefer-rest-params
       ["new.target", new.target],

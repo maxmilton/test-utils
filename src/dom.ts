@@ -3,6 +3,7 @@
  */
 
 /* eslint "@typescript-eslint/no-invalid-void-type": "warn" */
+/* eslint "unicorn/no-global-object-property-assignment": "off" */
 
 import { GlobalWindow, type Window } from "happy-dom";
 

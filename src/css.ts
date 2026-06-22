@@ -16,7 +16,6 @@ export const SKIP = Symbol("SKIP");
  * "parent") for cleaner logging. **Intended for debugging only.**
  */
 export const cleanElement = <T extends Element & { siblings?: Element[] }>(element: T): T => {
-  // biome-ignore lint/correctness/noUnusedVariables: partially pick/discard keys
   const { root, parent, children, siblings, ...rest } = element;
   // @ts-expect-error - TODO: Fix "children" prop type
   rest.children = Array.isArray(children) ? children.length : children;
@@ -51,7 +50,7 @@ function load(root: Element[]): void {
   cache.set(root, map);
 
   walk(root, (element) => {
-    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
+    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with, unicorn/prefer-at
     if (element.type[0] === "@") {
       switch (element.type) {
         case CONTAINER:
@@ -152,7 +151,7 @@ export function hexToRgb(hex: string): [r: number, g: number, b: number] {
 
 export function linearize(color: number): number {
   const v = color / 255; // normalize
-  return v <= 0.039_28 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; // gamma correction
+  return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; // gamma correction
 }
 
 export function luminance([r, g, b]: [number, number, number]): number {
