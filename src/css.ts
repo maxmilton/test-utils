@@ -50,7 +50,7 @@ function load(root: Element[]): void {
   cache.set(root, map);
 
   walk(root, (element) => {
-    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with, unicorn/prefer-at
+    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
     if (element.type[0] === "@") {
       switch (element.type) {
         case CONTAINER:

@@ -43,7 +43,7 @@ export function performanceSpy(exclude: string[] = []): () => void {
   let happydomInternalNowCalls = 0;
 
   function now() {
-    // eslint-disable-next-line unicorn/error-message,unicorn/no-nonstandard-builtin-properties
+    // eslint-disable-next-line unicorn/error-message
     const callerLocation = new Error().stack?.split("\n", 4)[3];
     if (callerLocation?.includes("/node_modules/happy-dom/lib/")) {
       happydomInternalNowCalls++;
