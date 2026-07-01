@@ -57,7 +57,7 @@
     }
   },
   "dependencies": {
-    "@maxmilton/html-parser": "^0.0.12",
+    "@maxmilton/html-parser": "^0.0.13",
     "@types/stylis": "^4.2.7",
     "stylis": "^4.3.6"
   },
