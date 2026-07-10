@@ -2,10 +2,10 @@
   "name": "@maxmilton/test-utils",
   "version": "0.0.15",
   "description": "Test utilities with support for Bun, CSS, stage1, and more",
-  "repository": "github:maxmilton/test-utils",
   "bugs": "https://github.com/maxmilton/test-utils/issues",
-  "author": "Max Milton <max@2okki.com>",
+  "repository": "github:maxmilton/test-utils",
   "license": "MIT",
+  "author": "Max Milton <max@2okki.com>",
   "type": "module",
   "exports": {
     "./css": {
@@ -48,14 +48,6 @@
     "test": "bun test --only-failures",
     "test:ci": "bun test --coverage --random --rerun-each=3"
   },
-  "peerDependencies": {
-    "happy-dom": ">=14.0.0 <21.0.0"
-  },
-  "peerDependenciesMeta": {
-    "happy-dom": {
-      "optional": true
-    }
-  },
   "dependencies": {
     "@maxmilton/html-parser": "^0.0.13",
     "@types/stylis": "^4.2.7",
@@ -72,5 +64,13 @@
     "stage1": "0.10.0",
     "typescript": "6.0.3",
     "typescript-eslint": "8.62.1"
+  },
+  "peerDependencies": {
+    "happy-dom": ">=14.0.0 <21.0.0"
+  },
+  "peerDependenciesMeta": {
+    "happy-dom": {
+      "optional": true
+    }
   }
 }
