@@ -158,6 +158,7 @@ export function luminance([r, g, b]: [number, number, number]): number {
   return linearize(r) * 0.2126 + linearize(g) * 0.7152 + linearize(b) * 0.0722;
 }
 
+// eslint-disable-next-line unicorn/consistent-boolean-name
 export function isLightOrDark(hexColor: string): "light" | "dark" {
   return luminance(hexToRgb(hexColor)) > 0.179 ? "light" : "dark";
 }
