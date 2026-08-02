@@ -63,7 +63,7 @@
     "happy-dom": "20.11.1",
     "stage1": "0.10.0",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.62.1"
+    "typescript-eslint": "8.65.0"
   },
   "peerDependencies": {
     "happy-dom": ">=14.0.0 <21.0.0"
