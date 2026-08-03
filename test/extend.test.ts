@@ -402,13 +402,14 @@ describe("matcher: toHaveParameters", () => {
     expect(matcher).not.toBeClass();
   });
 
-  test.each(
-    funcs,
-  )("matches function %# with %i required and %i optional parameters", (required, optional, func) => {
-    expect.assertions(2);
-    expect(func).toHaveParameters(required, optional);
-    expect(func).toHaveLength(required);
-  });
+  test.each(funcs)(
+    "matches function %# with %i required and %i optional parameters",
+    (required, optional, func) => {
+      expect.assertions(2);
+      expect(func).toHaveParameters(required, optional);
+      expect(func).toHaveLength(required);
+    },
+  );
 
   // TODO: Add test for failing case when passing non-function once bun supports it
 });

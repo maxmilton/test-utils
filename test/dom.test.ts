@@ -192,7 +192,7 @@ describe("render", () => {
     render(document.createElement("a"));
     document.body.append(document.createElement("span"));
     expect(document.body.childNodes).toHaveLength(5);
-    expect(document.body.innerHTML).toBe(
+    expect(document.body.getHTML()).toBe(
       "<span></span><span></span><div><a></a></div><div><a></a></div><span></span>",
     );
     document.body.textContent = "";
@@ -201,7 +201,7 @@ describe("render", () => {
   test("renders Test component correctly", () => {
     expect.assertions(1);
     const rendered = render(Test({ text: "abc" }));
-    expect(rendered.container.innerHTML).toBe('<div id="test">abc</div>');
+    expect(rendered.container.getHTML()).toBe('<div id="test">abc</div>');
   });
 
   describe("unmount method", () => {

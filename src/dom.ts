@@ -28,6 +28,7 @@ const originalConsole = global.console;
  * @see https://github.com/capricorn86/happy-dom/wiki/Window
  */
 export function setupDOM(options?: AbstractConstructorParameters<typeof Window>[0]): void {
+  /* eslint-disable @typescript-eslint/unbound-method */
   const dom = new GlobalWindow(options);
   global.happyDOM = dom.happyDOM;
   global.$console = originalConsole;
@@ -55,6 +56,7 @@ export function setupDOM(options?: AbstractConstructorParameters<typeof Window>[
   global.MutationObserver = window.MutationObserver;
   global.CSSStyleSheet = window.CSSStyleSheet;
   global.Text = window.Text;
+  /* eslint-enable @typescript-eslint/unbound-method */
 
   // //////////////////////////
 
@@ -138,7 +140,9 @@ export interface RenderResult {
    *
    * @param element - An element to inspect. Default is the mounted container.
    */
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   debug(this: void, element?: Element): void;
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   unmount(this: void): void;
 }
 
@@ -155,12 +159,8 @@ export function render(component: Node): RenderResult {
   return {
     container,
     debug(el = container) {
-      // const { format } = await import("prettier");
-      // const html = await format(el.innerHTML, { parser: "html" });
-      // $console.log(`DEBUG:\n${html}`);
-
-      // FIXME: Replace with biome once it has a HTML parser
-      $console.log(`DEBUG:\n${el.innerHTML}`);
+      // TODO: Use custom pretty formatter.
+      $console.log(`DEBUG:\n${el.getHTML()}`);
     },
     unmount() {
       // eslint-disable-next-line unicorn/prefer-dom-node-remove
