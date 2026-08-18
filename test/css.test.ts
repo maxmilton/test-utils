@@ -159,7 +159,7 @@ describe("walk", () => {
 
   test("has no return value", () => {
     expect.assertions(1);
-    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+    // oxlint-disable-next-line typescript/no-confusing-void-expression
     expect(walk(ast, () => {})).toBeUndefined();
   });
 
@@ -174,8 +174,10 @@ describe("walk", () => {
     expect.assertions(1);
     const selectors: string[] = [];
     walk(ast, (element) => {
+      // oxlint-disable-next-line vitest/no-conditional-in-test
       if (element.type === RULESET) {
-        // eslint-disable-next-line @typescript-eslint/no-misused-spread
+        // oxlint-disable-next-line vitest/no-conditional-in-test
+        if (!Array.isArray(element.props)) throw new Error("Expected element.props to be an array");
         selectors.push(...element.props);
       }
     });
@@ -238,14 +240,15 @@ describe("cleanElement", () => {
     expect(cleaned).toBePlainObject();
   });
 
-  for (const prop of ["root", "parent", "siblings"] as const) {
-    test(`removes "${prop}" property without mutating original object`, () => {
+  test.each(["root", "parent", "siblings"])(
+    'removes "%s" property without mutating original object',
+    (prop) => {
       expect.assertions(2);
       const cleaned = cleanElement(ast[0]);
       expect(ast[0]).toHaveProperty(prop);
       expect(cleaned).not.toHaveProperty(prop);
-    });
-  }
+    },
+  );
 
   test('replaces "children" property with count of child elements when children is array', () => {
     expect.assertions(3);
@@ -258,7 +261,6 @@ describe("cleanElement", () => {
 
   test('leaves "children" property alone when children is not array', () => {
     expect.assertions(5);
-    // eslint-disable-next-line unicorn/better-dom-traversing
     const element = ast[0].children[0] as Element;
     expect(element).toBePlainObject();
     expect(element.type).toBe(DECLARATION);

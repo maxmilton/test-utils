@@ -22,8 +22,8 @@ export const cleanElement = <T extends Element & { siblings?: Element[] }>(eleme
   return rest as T;
 };
 
-// biome-ignore lint/suspicious/noConfusingVoidType: allow void return type
-type VisitorFunction = (element: Element) => typeof SKIP | void; // eslint-disable-line @typescript-eslint/no-invalid-void-type
+// oxlint-disable-next-line typescript/no-invalid-void-type
+type VisitorFunction = (element: Element) => typeof SKIP | void;
 
 function visit(element: Element, visitor: VisitorFunction): void {
   if (visitor(element) === SKIP) return;
@@ -50,7 +50,7 @@ function load(root: Element[]): void {
   cache.set(root, map);
 
   walk(root, (element) => {
-    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
+    // oxlint-disable-next-line typescript/prefer-string-starts-ends-with
     if (element.type[0] === "@") {
       switch (element.type) {
         case CONTAINER:
@@ -61,7 +61,7 @@ function load(root: Element[]): void {
         case SUPPORTS:
           return;
         default:
-          // eslint-disable-next-line consistent-return
+          // oxlint-disable-next-line typescript/consistent-return
           return SKIP;
       }
     }
@@ -76,7 +76,7 @@ function load(root: Element[]): void {
         }
       }
     }
-    // eslint-disable-next-line consistent-return
+    // oxlint-disable-next-line typescript/consistent-return
     return SKIP;
   });
 }
@@ -126,12 +126,12 @@ export function reduce(elements: Element[]): Record<string, string> {
         if (child.type === DECLARATION) {
           decls[child.props as string] = child.children as string;
         } else {
-          // eslint-disable-next-line no-console
+          // oxlint-disable-next-line no-console
           console.warn("Unexpected child element type:", child.type);
         }
       }
     } else {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.warn("Unexpected element type:", element.type);
     }
   }
@@ -140,25 +140,26 @@ export function reduce(elements: Element[]): Record<string, string> {
 }
 
 export function isHexColor(color: string): boolean {
-  return /^#[\da-f]{6,8}$/i.test(color);
+  return /^#[\da-f]{6,8}$/iu.test(color);
 }
 
+// oxlint-disable-next-line id-length
 export function hexToRgb(hex: string): [r: number, g: number, b: number] {
   const int = Number.parseInt(hex.slice(1, 7), 16);
-  // eslint-disable-next-line no-bitwise
+  // oxlint-disable-next-line no-bitwise
   return [(int >> 16) & 255, (int >> 8) & 255, int & 255];
 }
 
 export function linearize(color: number): number {
-  const v = color / 255; // normalize
-  return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; // gamma correction
+  const val = color / 255; // normalize
+  return val <= 0.03928 ? val / 12.92 : ((val + 0.055) / 1.055) ** 2.4; // gamma correction
 }
 
+// oxlint-disable-next-line id-length
 export function luminance([r, g, b]: [number, number, number]): number {
   return linearize(r) * 0.2126 + linearize(g) * 0.7152 + linearize(b) * 0.0722;
 }
 
-// eslint-disable-next-line unicorn/consistent-boolean-name
 export function isLightOrDark(hexColor: string): "light" | "dark" {
   return luminance(hexToRgb(hexColor)) > 0.179 ? "light" : "dark";
 }

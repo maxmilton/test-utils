@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, max-classes-per-file, no-console, unicorn/consistent-function-scoping */
+// oxlint-disable max-classes-per-file id-length
 
 import { describe, expect, spyOn, test } from "bun:test";
 import * as extendExports from "../src/extend.ts";
@@ -24,32 +24,27 @@ describe("exports", () => {
 });
 
 describe("matcher: toBePlainObject", () => {
-  const plainObjects = [
-    {},
-    { foo: "bar" },
-    Object.create(null),
-    Object.create({}),
-    // eslint-disable-next-line no-new-object
-    new Object(),
-  ];
+  const plainObjects = [{}, { foo: "bar" }, Object.create(null), Object.create({}), new Object()];
   const notPlainObjects = [
     null,
-    // eslint-disable-next-line unicorn/no-new-array
+    // oxlint-disable-next-line unicorn/no-new-array
     new Array(1),
     [[{}]], // double array due to quirk of bun test; resolves to [{}]
     [[null]], // double array due to quirk of bun test; resolves to [null]
     () => {},
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval
+    // oxlint-disable-next-line no-new-func typescript/no-implied-eval
     new Function(),
     Function,
     Object,
-    /(?:)/,
+    /(?:)/u,
     new Date(),
-    new Error(), // eslint-disable-line unicorn/error-message
+    // oxlint-disable-next-line unicorn/error-message
+    new Error(),
     new Map(),
     new Set(),
     new WeakMap(),
     new WeakSet(),
+    // oxlint-disable-next-line promise/avoid-new
     new Promise(() => {}),
     new Int8Array(),
   ];
@@ -60,7 +55,9 @@ describe("matcher: toBePlainObject", () => {
     false,
     undefined,
     Symbol("sym"),
-    BigInt(1234), // eslint-disable-line unicorn/prefer-bigint-literals
+    // oxlint-disable-next-line unicorn/prefer-bigint-literals
+    BigInt(1234),
+    // oxlint-disable-next-line unicorn/prefer-number-properties
     NaN,
     Infinity,
   ];
@@ -72,7 +69,6 @@ describe("matcher: toBePlainObject", () => {
 
   test("matcher is a function", () => {
     expect.assertions(2);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const matcher = expect().toBePlainObject;
     expect(matcher).toBeFunction();
     expect(matcher).not.toBeClass();
@@ -95,12 +91,12 @@ describe("matcher: toBePlainObject", () => {
 });
 
 describe("matcher: toBeClass", () => {
-  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
+  // oxlint-disable-next-line typescript/no-extraneous-class
   class Foo {}
   const classes = [
     Foo,
     class Bar extends Foo {},
-    // eslint-disable-next-line @typescript-eslint/no-extraneous-class
+    // oxlint-disable-next-line typescript/no-extraneous-class
     class {},
     class extends Foo {},
     Foo.prototype.constructor,
@@ -112,33 +108,37 @@ describe("matcher: toBeClass", () => {
     false,
     undefined,
     Symbol("sym"),
-    BigInt(1234), // eslint-disable-line unicorn/prefer-bigint-literals
+    // oxlint-disable-next-line unicorn/prefer-bigint-literals
+    BigInt(1234),
+    // oxlint-disable-next-line unicorn/prefer-number-properties
     NaN,
     Infinity,
     {},
     { foo: "bar" },
     Object.create(null),
     Object.create({}),
-    // eslint-disable-next-line no-new-object
+    // oxlint-disable-next-line no-object-constructor
     new Object(),
     null,
-    // eslint-disable-next-line unicorn/no-new-array
+    // oxlint-disable-next-line unicorn/no-new-array
     new Array(1),
     [[{}]], // double array due to quirk of bun test; resolves to [{}]
     [[null]], // double array due to quirk of bun test; resolves to [null]
     function foo() {},
     () => {},
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval
+    // oxlint-disable-next-line no-new-func typescript/no-implied-eval
     new Function(),
     Function,
     Object,
-    /(?:)/,
+    /(?:)/u,
     new Date(),
-    new Error(), // eslint-disable-line unicorn/error-message
+    // oxlint-disable-next-line unicorn/error-message
+    new Error(),
     new Map(),
     new Set(),
     new WeakMap(),
     new WeakSet(),
+    // oxlint-disable-next-line promise/avoid-new
     new Promise(() => {}),
     new Int8Array(),
 
@@ -162,7 +162,6 @@ describe("matcher: toBeClass", () => {
 
   test("matcher is a function", () => {
     expect.assertions(2);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const matcher = expect().toBeClass;
     expect(matcher).toBeFunction();
     expect(matcher).not.toBeClass();
@@ -191,9 +190,11 @@ describe("matcher: toHaveObjectType", () => {
     ["Number.MAX_VALUE", "[object Number]", Number.MAX_VALUE],
     ["Infinity", "[object Number]", Infinity],
     ["-Infinity", "[object Number]", -Infinity],
+    // oxlint-disable-next-line unicorn/prefer-number-properties
     ["NaN", "[object Number]", NaN],
     ["Symbol('sym')", "[object Symbol]", Symbol("sym")],
-    ["BigInt(1234)", "[object BigInt]", BigInt(1234)], // eslint-disable-line unicorn/prefer-bigint-literals
+    // oxlint-disable-next-line unicorn/prefer-bigint-literals
+    ["BigInt(1234)", "[object BigInt]", BigInt(1234)],
     ["[]", "[object Array]", []],
     ["{}", "[object Object]", {}],
     ["<empty string>", "[object String]", ""],
@@ -222,10 +223,12 @@ describe("matcher: toHaveObjectType", () => {
     ["new Set()", "[object Set]", new Set()],
     ["new WeakMap()", "[object WeakMap]", new WeakMap()],
     ["new WeakSet()", "[object WeakSet]", new WeakSet()],
+    // oxlint-disable-next-line promise/avoid-new
     ["new Promise(() => {})", "[object Promise]", new Promise(() => {})],
     ["new Date()", "[object Date]", new Date()],
-    ["/(?:)/", "[object RegExp]", /(?:)/],
-    ["new Error()", "[object Error]", new Error()], // eslint-disable-line unicorn/error-message
+    ["/(?:)/", "[object RegExp]", /(?:)/u],
+    // oxlint-disable-next-line unicorn/error-message
+    ["new Error()", "[object Error]", new Error()],
     ["Math", "[object Math]", Math],
     ["JSON", "[object JSON]", JSON],
     ["Intl", "[object Intl]", Intl],
@@ -248,9 +251,8 @@ describe("matcher: toHaveObjectType", () => {
     ["globalThis", "[object Object]", globalThis],
     // TODO: Should be "[object Window]" but happy-dom returns "[object Object]".
     // ["self", "[object Window]", self],
-    // eslint-disable-next-line no-restricted-globals
     ["self", "[object Object]", self],
-    ["this", "[object Null]", this], // eslint-disable-line unicorn/no-this-outside-of-class
+    ["this", "[object Null]", this],
     ["* import", "[object Module]", extendExports], // bun only
   ] as const;
 
@@ -261,7 +263,6 @@ describe("matcher: toHaveObjectType", () => {
 
   test("matcher is a function", () => {
     expect.assertions(2);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const matcher = expect().toHaveObjectType;
     expect(matcher).toBeFunction();
     expect(matcher).not.toBeClass();
@@ -275,6 +276,7 @@ describe("matcher: toHaveObjectType", () => {
 
 describe("matcher: toHaveParameters", () => {
   const funcs: [required: number, optional: number, func: unknown][] = [
+    // oxlint-disable func-names
     [0, 0, function foo() {}],
     [1, 0, function foo(_a: unknown) {}],
     [0, 1, function foo(_a = 1) {}],
@@ -282,20 +284,13 @@ describe("matcher: toHaveParameters", () => {
     [1, 1, function foo(_a: unknown, _b = 1) {}],
     [0, 2, function foo(_a = 1, _b = 2) {}],
     [0, 3, function foo(_a = 1, _b = 2, ..._rest: unknown[]) {}],
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [0, 0, function () {}], // eslint-disable-line func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [1, 0, function (_a: unknown) {}], // eslint-disable-line func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [0, 1, function (_a = 1) {}], // eslint-disable-line func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [2, 0, function (_a: unknown, _b: unknown) {}], // eslint-disable-line func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [1, 1, function (_a: unknown, _b = 1) {}], // eslint-disable-line func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [0, 2, function (_a = 1, _b = 2) {}], // eslint-disable-line func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [0, 3, function (_a = 1, _b = 2, ..._rest: unknown[]) {}], // eslint-disable-line func-names
+    [0, 0, function () {}],
+    [1, 0, function (_a: unknown) {}],
+    [0, 1, function (_a = 1) {}],
+    [2, 0, function (_a: unknown, _b: unknown) {}],
+    [1, 1, function (_a: unknown, _b = 1) {}],
+    [0, 2, function (_a = 1, _b = 2) {}],
+    [0, 3, function (_a = 1, _b = 2, ..._rest: unknown[]) {}],
     [0, 0, () => {}],
     [1, 0, (_a: unknown) => {}],
     [0, 1, (_a = 1) => {}],
@@ -303,83 +298,48 @@ describe("matcher: toHaveParameters", () => {
     [1, 1, (_a: unknown, _b = 1) => {}],
     [0, 2, (_a = 1, _b = 2) => {}],
     [0, 3, (_a = 1, _b = 2, ..._rest: unknown[]) => {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 0, function* foo() {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [1, 0, function* foo(_a: unknown) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 1, function* foo(_a = 1) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [2, 0, function* foo(_a: unknown, _b: unknown) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [1, 1, function* foo(_a: unknown, _b = 1) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 2, function* foo(_a = 1, _b = 2) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 3, function* foo(_a = 1, _b = 2, ..._rest: unknown[]) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 0, async function foo() {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [1, 0, async function foo(_a: unknown) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 1, async function foo(_a = 1) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [2, 0, async function foo(_a: unknown, _b: unknown) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [1, 1, async function foo(_a: unknown, _b = 1) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 2, async function foo(_a = 1, _b = 2) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 3, async function foo(_a = 1, _b = 2, ..._rest: unknown[]) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 0, async function* foo() {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [1, 0, async function* foo(_a: unknown) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 1, async function* foo(_a = 1) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [2, 0, async function* foo(_a: unknown, _b: unknown) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [1, 1, async function* foo(_a: unknown, _b = 1) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 2, async function* foo(_a = 1, _b = 2) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     [0, 3, async function* foo(_a = 1, _b = 2, ..._rest: unknown[]) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, func-names
     [0, 0, function* () {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, func-names
     [1, 0, function* (_a: unknown) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, func-names
     [0, 1, function* (_a = 1) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, func-names
     [2, 0, function* (_a: unknown, _b: unknown) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, func-names
     [1, 1, function* (_a: unknown, _b = 1) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, func-names
     [0, 2, function* (_a = 1, _b = 2) {}],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, func-names
     [0, 3, function* (_a = 1, _b = 2, ..._rest: unknown[]) {}],
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [0, 0, async function () {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [1, 0, async function (_a: unknown) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [0, 1, async function (_a = 1) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [2, 0, async function (_a: unknown, _b: unknown) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [1, 1, async function (_a: unknown, _b = 1) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [0, 2, async function (_a = 1, _b = 2) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    // biome-ignore lint/complexity/useArrowFunction: explicit test case
-    [0, 3, async function (_a = 1, _b = 2, ..._rest: unknown[]) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    [0, 0, async function* () {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    [1, 0, async function* (_a: unknown) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    [0, 1, async function* (_a = 1) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    [2, 0, async function* (_a: unknown, _b: unknown) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    [1, 1, async function* (_a: unknown, _b = 1) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    [0, 2, async function* (_a = 1, _b = 2) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
-    [0, 3, async function* (_a = 1, _b = 2, ..._rest: unknown[]) {}], // eslint-disable-line @typescript-eslint/no-empty-function, func-names
+    [0, 0, async function () {}],
+    [1, 0, async function (_a: unknown) {}],
+    [0, 1, async function (_a = 1) {}],
+    [2, 0, async function (_a: unknown, _b: unknown) {}],
+    [1, 1, async function (_a: unknown, _b = 1) {}],
+    [0, 2, async function (_a = 1, _b = 2) {}],
+    [0, 3, async function (_a = 1, _b = 2, ..._rest: unknown[]) {}],
+    [0, 0, async function* () {}],
+    [1, 0, async function* (_a: unknown) {}],
+    [0, 1, async function* (_a = 1) {}],
+    [2, 0, async function* (_a: unknown, _b: unknown) {}],
+    [1, 1, async function* (_a: unknown, _b = 1) {}],
+    [0, 2, async function* (_a = 1, _b = 2) {}],
+    [0, 3, async function* (_a = 1, _b = 2, ..._rest: unknown[]) {}],
     [0, 0, async () => {}],
     [1, 0, async (_a: unknown) => {}],
     [0, 1, async (_a = 1) => {}],
@@ -387,6 +347,7 @@ describe("matcher: toHaveParameters", () => {
     [1, 1, async (_a: unknown, _b = 1) => {}],
     [0, 2, async (_a = 1, _b = 2) => {}],
     [0, 3, async (_a = 1, _b = 2, ..._rest: unknown[]) => {}],
+    // oxlint-enable func-names
   ];
 
   test("expect() has matcher", () => {
@@ -396,7 +357,6 @@ describe("matcher: toHaveParameters", () => {
 
   test("matcher is a function", () => {
     expect.assertions(2);
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const matcher = expect().toHaveParameters;
     expect(matcher).toBeFunction();
     expect(matcher).not.toBeClass();
@@ -480,12 +440,9 @@ describe("parameters", () => {
     // FIXME: How to test this? Bun trims the whitespace
     test.skip("excess whitespace", () => {
       expect.assertions(1);
-      // biome-ignore format: explicit test case
-      // eslint-disable-next-line no-multi-spaces, space-in-parens
+      // oxfmt-ignore
       function   foo (  _a  =
-          // eslint-disable-next-line comma-spacing, no-multi-spaces
           1  ,
-         // eslint-disable-next-line comma-dangle
          _b = 2
 
          // x
@@ -584,7 +541,7 @@ describe("parameters", () => {
 
     test("case 4", () => {
       expect.assertions(1);
-      // eslint-disable-next-line @typescript-eslint/no-useless-default-assignment, unicorn/no-object-as-default-parameter
+      // oxlint-disable-next-line typescript/no-useless-default-assignment unicorn/no-object-as-default-parameter
       function foo({ _a = 1, _b = 2 } = { _a: 5 }, [_c = 3, _d = 4] = [6]) {}
       expect(parameters(foo)).toBe(2);
     });
@@ -593,23 +550,21 @@ describe("parameters", () => {
   describe("trailing commas", () => {
     test("case 1", () => {
       expect.assertions(1);
-      // biome-ignore format: explicit test case
-      // eslint-disable-next-line comma-dangle
+      // oxfmt-ignore
       function foo(_a: unknown, _b: unknown,) {}
       expect(parameters(foo)).toBe(2);
     });
 
     test("case 2", () => {
       expect.assertions(1);
-      // biome-ignore format: explicit test case
-      // eslint-disable-next-line comma-dangle, space-in-parens
+      // oxfmt-ignore
       function foo(_a: unknown, _b: unknown, ) {}
       expect(parameters(foo)).toBe(2);
     });
 
     test("case 3", () => {
       expect.assertions(1);
-      // biome-ignore format: explicit test case
+      // oxfmt-ignore
       function foo(
         _a: unknown,
         _b: unknown,
@@ -621,8 +576,8 @@ describe("parameters", () => {
   describe("parameter without parentheses in arrow functions", () => {
     test("case 1", () => {
       expect.assertions(1);
-      // biome-ignore format: explicit test case
-      const foo: ((_a: unknown) => void) = _a => {}; // eslint-disable-line arrow-parens
+      // oxfmt-ignore
+      const foo: ((_a: unknown) => void) = _a => {};
       expect(parameters(foo)).toBe(1);
     });
   });
@@ -675,8 +630,8 @@ describe("parameters", () => {
     test("nested string template literals simple", () => {
       expect.assertions(1);
       // NOTE: Bun optimizes simple template literals into a single string
-      // eslint-disable-next-line unicorn/no-useless-template-literals
-      function foo(_a = `x,${`y,${`z,`},`},`, _b = ``) {} // eslint-disable-line @typescript-eslint/no-unnecessary-template-expression, quotes
+      // oxlint-disable-next-line typescript/no-unnecessary-template-expression
+      function foo(_a = `x,${`y,${`z,`},`},`, _b = ``) {}
       expect(parameters(foo)).toBe(2);
     });
 
@@ -686,7 +641,8 @@ describe("parameters", () => {
       const x = "x";
       const y = "y";
       const z = "z";
-      function foo(_a = `${x},${`,${y},${`,${z},`},`},`) {} // eslint-disable-line @typescript-eslint/no-unnecessary-template-expression
+      // oxlint-disable-next-line typescript/no-unnecessary-template-expression
+      function foo(_a = `${x},${`,${y},${`,${z},`},`},`) {}
       expect(parameters(foo)).toBe(1);
     });
 
@@ -698,14 +654,14 @@ describe("parameters", () => {
 
     test('escaped "', () => {
       expect.assertions(1);
-      // biome-ignore format: explicit test case
+      // oxfmt-ignore
       function foo(_a = "\"", _b = "\"") {}
       expect(parameters(foo)).toBe(2);
     });
 
     test("escaped `", () => {
       expect.assertions(1);
-      function foo(_a = `\``, _b = `\``) {} // eslint-disable-line quotes
+      function foo(_a = `\``, _b = `\``) {}
       expect(parameters(foo)).toBe(2);
     });
 
@@ -725,8 +681,8 @@ describe("parameters", () => {
 
     test("escaped all", () => {
       expect.assertions(1);
-      // biome-ignore lint/suspicious/noUselessEscapeInString: used in test
-      function foo(_a = "'\"\`", _b = "") {} // eslint-disable-line no-useless-escape
+      // oxlint-disable-next-line no-useless-escape
+      function foo(_a = "'\"\`", _b = "") {}
       expect(parameters(foo)).toBe(2);
     });
   });
@@ -740,7 +696,8 @@ describe("parameters", () => {
 
     test("case 2", () => {
       expect.assertions(1);
-      function foo(_a = () => {}, _b: unknown) {} // eslint-disable-line @typescript-eslint/default-param-last
+      // oxlint-disable-next-line default-param-last
+      function foo(_a = () => {}, _b: unknown) {}
       expect(parameters(foo)).toBe(2);
     });
 
@@ -772,19 +729,20 @@ describe("parameters", () => {
       expect.assertions(1);
       const z = 3;
       async function foo(
-        /* eslint-disable @typescript-eslint/default-param-last */
-        _a = { x: 1, y: 2, z }, // eslint-disable-line unicorn/no-object-as-default-parameter
+        // oxlint-disable default-param-last
+        // oxlint-disable-next-line unicorn/no-object-as-default-parameter
+        _a = { x: 1, y: 2, z },
         _b = [1, 2, 3],
         _c = () => {},
         _d = Date.now(),
         _e = z,
         _f = z + 1 - (2 * 3) / 4,
-        // eslint-disable-next-line unicorn/prefer-number-coercion
+        // oxlint-disable-next-line unicorn/prefer-number-coercion
         _g = Number.parseInt("123.456", 10),
         _h: unknown,
         _i = `,${String(z)},${String(z)},${String(z)},`,
         _j = '{{[[(())]]}}),),],],},}"""```\\\'',
-        /* eslint-enable @typescript-eslint/default-param-last */
+        // oxlint-enable default-param-last
       ) {
         await Promise.resolve();
       }
@@ -795,10 +753,11 @@ describe("parameters", () => {
   describe("scope and shadowing", () => {
     test("case 1", () => {
       expect.assertions(1);
-      // biome-ignore lint/correctness/noUnusedVariables: used for test
+      // oxlint-disable-next-line no-unused-vars
       const x = 1;
-      // eslint-disable-next-line @typescript-eslint/no-shadow
+      // oxlint-disable-next-line no-shadow
       function foo(x: unknown) {
+        // oxlint-disable-next-line no-console
         console.log(x);
       }
       expect(parameters(foo)).toBe(1);
@@ -816,14 +775,14 @@ describe("parameters", () => {
   describe("non-ASCII identifiers", () => {
     test("case 1", () => {
       expect.assertions(1);
-      // biome-ignore lint/correctness/noUnusedFunctionParameters: used for test
+      // oxlint-disable-next-line no-unused-vars
       function 𝑓𝑜𝑜(𝑎: unknown, 𝑏: unknown) {}
       expect(parameters(𝑓𝑜𝑜)).toBe(2);
     });
 
     test("case 2", () => {
       expect.assertions(1);
-      // biome-ignore lint/correctness/noUnusedFunctionParameters: used for test
+      // oxlint-disable-next-line no-unused-vars
       const 𝑓𝑜𝑜 = (𝑎: unknown, 𝑏: unknown) => {};
       expect(parameters(𝑓𝑜𝑜)).toBe(2);
     });
@@ -858,8 +817,8 @@ describe("parameters", () => {
     test("basic", () => {
       expect.assertions(1);
       function foo(_a: unknown, _b: unknown) {
-        // biome-ignore lint/complexity/noArguments: used for test
-        console.log(arguments); // eslint-disable-line prefer-rest-params
+        // oxlint-disable-next-line no-console prefer-rest-params
+        console.log(arguments);
       }
       expect(parameters(foo)).toBe(2);
     });
@@ -899,14 +858,12 @@ describe("parameters", () => {
 
     test("function expression", () => {
       expect.assertions(1);
-      // biome-ignore lint/complexity/useArrowFunction: explicit test case
-      const bar = function (_a: unknown, _b: unknown) {}; // eslint-disable-line func-names
+      const bar = function (_a: unknown, _b: unknown) {};
       expect(parameters(bar)).toBe(2);
     });
 
     test("generator function expression", () => {
       expect.assertions(1);
-      // eslint-disable-next-line func-names
       const bar = function* (_a: unknown, _b: unknown) {
         yield null;
       };
@@ -915,8 +872,7 @@ describe("parameters", () => {
 
     test("async function expression", () => {
       expect.assertions(1);
-      // biome-ignore lint/complexity/useArrowFunction: explicit test case
-      const bar = async function (_a: unknown, _b: unknown) /* eslint-disable-line func-names */ {
+      const bar = async function (_a: unknown, _b: unknown) {
         await Promise.resolve();
       };
       expect(parameters(bar)).toBe(2);
@@ -924,7 +880,7 @@ describe("parameters", () => {
 
     test("async generator function expression", () => {
       expect.assertions(1);
-      const bar = async function* (_a: unknown, _b: unknown) /* eslint-disable-line func-names */ {
+      const bar = async function* (_a: unknown, _b: unknown) {
         await Promise.resolve();
         yield null;
       };
@@ -977,12 +933,12 @@ describe("parameters", () => {
     });
   });
 
-  /* eslint-disable @typescript-eslint/no-empty-function, @typescript-eslint/no-extraneous-class, @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-useless-constructor, class-methods-use-this */
   describe("classes", () => {
     test("basic", () => {
       expect.assertions(1);
+      // oxlint-disable-next-line typescript/no-extraneous-class
       class Foo {
-        // biome-ignore lint/complexity/noUselessConstructor: simple test case
+        // oxlint-disable-next-line no-useless-constructor
         constructor(_a: unknown, _b: unknown) {}
       }
       expect(parameters(Foo)).toBe(2);
@@ -990,8 +946,9 @@ describe("parameters", () => {
 
     test("no constructor parameters", () => {
       expect.assertions(1);
+      // oxlint-disable-next-line typescript/no-extraneous-class
       class Foo {
-        // biome-ignore lint/complexity/noUselessConstructor: simple test case
+        // oxlint-disable-next-line no-useless-constructor
         constructor() {}
       }
       expect(parameters(Foo)).toBe(0);
@@ -999,11 +956,13 @@ describe("parameters", () => {
 
     test("extends", () => {
       expect.assertions(3);
+      // oxlint-disable-next-line typescript/no-extraneous-class
       class Foo {
-        // biome-ignore lint/complexity/noUselessConstructor: simple test case
+        // oxlint-disable-next-line no-useless-constructor
         constructor(_a: unknown, _b: unknown) {}
       }
       class Bar extends Foo {
+        // oxlint-disable-next-line no-unused-vars
         constructor(_a: unknown, _b: unknown, _c: unknown) {
           super(_a, _b);
         }
@@ -1022,8 +981,9 @@ describe("parameters", () => {
       expect.assertions(1);
       expect(
         parameters(
+          // oxlint-disable-next-line typescript/no-extraneous-class
           class {
-            // biome-ignore lint/complexity/noUselessConstructor: simple test case
+            // oxlint-disable-next-line no-useless-constructor
             constructor(_a: unknown, _b: unknown) {}
           },
         ),
@@ -1032,11 +992,13 @@ describe("parameters", () => {
 
     test("with no constructor function throw", () => {
       expect.assertions(4);
+      // oxlint-disable-next-line typescript/no-extraneous-class
       class Foo {}
       class Bar extends Foo {}
       const error = new Error("Invalid function signature");
       expect(() => parameters(Foo)).toThrow(error);
       expect(() => parameters(Bar)).toThrow(error);
+      // oxlint-disable-next-line typescript/no-extraneous-class
       expect(() => parameters(class {})).toThrow(error);
       expect(() => parameters(class extends Foo {})).toThrow(error);
     });
@@ -1045,9 +1007,10 @@ describe("parameters", () => {
       test("case 1: constructor", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
         expect(parameters(Foo)).toBe(2);
       });
@@ -1055,9 +1018,10 @@ describe("parameters", () => {
       test("case 2: method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
         const instance = new Foo(1, 2);
         expect(parameters(instance.method)).toBe(3);
@@ -1066,7 +1030,8 @@ describe("parameters", () => {
       test("case 3: method parameters no constructor", () => {
         expect.assertions(1);
         class Foo {
-          method(this: void, _a: unknown, _b: unknown, _c: unknown) {}
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public method(this: void, _a: unknown, _b: unknown, _c: unknown) {}
         }
         const instance = new Foo();
         expect(parameters(instance.method)).toBe(3);
@@ -1075,10 +1040,10 @@ describe("parameters", () => {
       test("case 4: generator method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          // eslint-disable-next-line generator-star-spacing
-          *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             yield null;
           }
         }
@@ -1089,9 +1054,10 @@ describe("parameters", () => {
       test("case 5: async method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          async method(this: void, _c: unknown, _d: unknown, _e: unknown) {
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public async method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             await Promise.resolve();
           }
         }
@@ -1102,10 +1068,10 @@ describe("parameters", () => {
       test("case 6: async generator method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          // eslint-disable-next-line generator-star-spacing
-          async *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public async *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             await Promise.resolve();
             yield null;
           }
@@ -1117,9 +1083,10 @@ describe("parameters", () => {
       test("case 7: anonymous method parameters", () => {
         expect.assertions(1);
         const instance = new (class {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
         })(1, 2);
         expect(parameters(instance.method)).toBe(3);
       });
@@ -1127,7 +1094,8 @@ describe("parameters", () => {
       test("case 8: field parameters", () => {
         expect.assertions(1);
         class Foo {
-          method = (_a: unknown, _b: unknown, _c: unknown) => {};
+          // oxlint-disable-next-line class-methods-use-this
+          public method = (_a: unknown, _b: unknown, _c: unknown) => {};
         }
         const instance = new Foo();
         expect(parameters(instance.method)).toBe(3);
@@ -1138,8 +1106,9 @@ describe("parameters", () => {
       test("case 1: constructor", () => {
         expect.assertions(1);
         class Foo {
-          static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line typescript/no-invalid-void-type
+          public static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo)).toBe(2);
@@ -1148,8 +1117,9 @@ describe("parameters", () => {
       test("case 2: method parameters", () => {
         expect.assertions(1);
         class Foo {
-          static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line typescript/no-invalid-void-type
+          public static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
@@ -1157,9 +1127,10 @@ describe("parameters", () => {
 
       test("case 3: method parameters no constructor", () => {
         expect.assertions(1);
-        // biome-ignore lint/complexity/noStaticOnlyClass: explicit test case
-        class Foo /* eslint-disable-line unicorn/no-static-only-class */ {
-          static method(this: void, _a: unknown, _b: unknown, _c: unknown) {}
+        // oxlint-disable-next-line typescript/no-extraneous-class
+        class Foo {
+          // oxlint-disable-next-line typescript/no-invalid-void-type
+          public static method(this: void, _a: unknown, _b: unknown, _c: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1167,11 +1138,11 @@ describe("parameters", () => {
       test("case 4: generator method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // eslint-disable-next-line generator-star-spacing
-          static *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
+          // oxlint-disable-next-line typescript/no-invalid-void-type
+          public static *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             yield null;
           }
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
@@ -1180,10 +1151,11 @@ describe("parameters", () => {
       test("case 5: async method parameters", () => {
         expect.assertions(1);
         class Foo {
-          static async method(this: void, _c: unknown, _d: unknown, _e: unknown) {
+          // oxlint-disable-next-line typescript/no-invalid-void-type
+          public static async method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             await Promise.resolve();
           }
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
@@ -1192,12 +1164,12 @@ describe("parameters", () => {
       test("case 6: async generator method parameters", () => {
         expect.assertions(1);
         class Foo {
-          // eslint-disable-next-line generator-star-spacing
-          static async *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
+          // oxlint-disable-next-line typescript/no-invalid-void-type
+          public static async *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             await Promise.resolve();
             yield null;
           }
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
@@ -1208,8 +1180,9 @@ describe("parameters", () => {
         expect(
           parameters(
             class {
-              static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
-              // biome-ignore lint/complexity/noUselessConstructor: simple test case
+              // oxlint-disable-next-line typescript/no-invalid-void-type
+              public static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
+              // oxlint-disable-next-line no-useless-constructor
               constructor(_a: unknown, _b: unknown) {}
             }.method,
           ),
@@ -1218,9 +1191,9 @@ describe("parameters", () => {
 
       test("case 8: field parameters", () => {
         expect.assertions(1);
-        // biome-ignore lint/complexity/noStaticOnlyClass: explicit test case
-        class Foo /* eslint-disable-line unicorn/no-static-only-class */ {
-          static method = (_a: unknown, _b: unknown, _c: unknown) => {};
+        // oxlint-disable-next-line typescript/no-extraneous-class
+        class Foo {
+          public static method = (_a: unknown, _b: unknown, _c: unknown) => {};
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1230,12 +1203,14 @@ describe("parameters", () => {
       test("case 1: constructor", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          get prop(): null {
+          // oxlint-disable-next-line class-methods-use-this
+          public get prop(): null {
             return null;
           }
-          set prop(_c: unknown) {}
+          // oxlint-disable-next-line class-methods-use-this
+          public set prop(_c: unknown) {}
         }
         expect(parameters(Foo)).toBe(2);
       });
@@ -1243,12 +1218,14 @@ describe("parameters", () => {
       test("case 2: getter/setter throws", () => {
         expect.assertions(1);
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          get prop(): null {
+          // oxlint-disable-next-line class-methods-use-this
+          public get prop(): null {
             return null;
           }
-          set prop(_c: unknown) {}
+          // oxlint-disable-next-line class-methods-use-this
+          public set prop(_c: unknown) {}
         }
         const instance = new Foo(1, 2);
         expect(() => parameters(instance.prop)).toThrow(new TypeError("Expected a function"));
@@ -1260,9 +1237,10 @@ describe("parameters", () => {
         expect.assertions(1);
         const prop = "method";
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          [prop](this: void, _c: unknown, _d: unknown, _e: unknown) {}
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public [prop](this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
         expect(parameters(Foo)).toBe(2);
       });
@@ -1271,9 +1249,10 @@ describe("parameters", () => {
         expect.assertions(1);
         const prop = "method";
         class Foo {
-          // biome-ignore lint/complexity/noUselessConstructor: simple test case
+          // oxlint-disable-next-line no-useless-constructor
           constructor(_a: unknown, _b: unknown) {}
-          [prop](this: void, _c: unknown, _d: unknown, _e: unknown) {}
+          // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
+          public [prop](this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
         const instance = new Foo(1, 2);
         expect(parameters(instance[prop])).toBe(3);
@@ -1281,9 +1260,7 @@ describe("parameters", () => {
     });
   });
 
-  /* eslint-enable @typescript-eslint/no-empty-function, @typescript-eslint/no-extraneous-class, @typescript-eslint/no-invalid-void-type, @typescript-eslint/no-useless-constructor, class-methods-use-this */
   describe("native functions", () => {
-    /* eslint-disable @typescript-eslint/unbound-method */
     const builtins: [text: string, func: (...args: never[]) => unknown, length: number][] = [
       ["Function", Function, 1],
       ["Object", Object, 1],
@@ -1300,11 +1277,17 @@ describe("parameters", () => {
       ["Array.prototype.splice", Array.prototype.splice, 2],
       ["Array.prototype.reduce", Array.prototype.reduce, 1],
       ["Array.prototype.reduceRight", Array.prototype.reduceRight, 1],
+      // oxlint-disable-next-line typescript/unbound-method
       ["Function.prototype.apply", Function.prototype.apply, 2],
+      // oxlint-disable-next-line typescript/unbound-method
       ["Function.prototype.call", Function.prototype.call, 1],
+      // oxlint-disable-next-line typescript/unbound-method
       ["String.prototype.replace", String.prototype.replace, 2],
+      // oxlint-disable-next-line typescript/unbound-method
       ["String.prototype.split", String.prototype.split, 2],
+      // oxlint-disable-next-line typescript/unbound-method
       ["String.prototype.match", String.prototype.match, 1],
+      // oxlint-disable-next-line typescript/unbound-method
       ["RegExp.prototype.exec", RegExp.prototype.exec, 1],
       ["Number.parseInt", Number.parseInt, 2],
       ["Symbol.for", Symbol.for, 1],
@@ -1323,7 +1306,6 @@ describe("parameters", () => {
       ["clearImmediate", clearImmediate, 1],
       ["fetch", fetch, 2],
     ];
-    /* eslint-enable @typescript-eslint/unbound-method */
 
     test.each(builtins)("case %#: %s", (_, func, length) => {
       expect.assertions(3);
@@ -1349,9 +1331,11 @@ describe("parameters", () => {
       ["Number.MAX_VALUE", Number.MAX_VALUE],
       ["Infinity", Infinity],
       ["-Infinity", -Infinity],
+      // oxlint-disable-next-line unicorn/prefer-number-properties
       ["NaN", NaN],
       ["Symbol('sym')", Symbol("sym")],
-      ["BigInt(1234)", BigInt(1234)], // eslint-disable-line unicorn/prefer-bigint-literals
+      // oxlint-disable-next-line unicorn/prefer-bigint-literals
+      ["BigInt(1234)", BigInt(1234)],
       ["[]", []],
       ["{}", {}],
       ["<empty string>", ""],
@@ -1370,10 +1354,12 @@ describe("parameters", () => {
       ["new Set()", new Set()],
       ["new WeakMap()", new WeakMap()],
       ["new WeakSet()", new WeakSet()],
+      // oxlint-disable-next-line promise/avoid-new
       ["new Promise(() => {})", new Promise(() => {})],
       ["new Date()", new Date()],
-      ["/(?:)/", /(?:)/],
-      ["new Error()", new Error()], // eslint-disable-line unicorn/error-message
+      ["/(?:)/", /(?:)/u],
+      // oxlint-disable-next-line unicorn/error-message
+      ["new Error()", new Error()],
       ["Math", Math],
       ["JSON", JSON],
       ["Intl", Intl],
@@ -1390,11 +1376,10 @@ describe("parameters", () => {
       ["process", process],
       ["global", global],
       ["globalThis", globalThis],
-      // eslint-disable-next-line no-restricted-globals
       ["self", self],
-      ["this", this], // eslint-disable-line unicorn/no-this-outside-of-class
-      // biome-ignore lint/complexity/noArguments: used in tests
-      ["arguments", arguments], // eslint-disable-line prefer-rest-params
+      ["this", this],
+      // oxlint-disable-next-line prefer-rest-params
+      ["arguments", arguments],
       ["new.target", new.target],
 
       // XXX: Although these are built-in classes, they have callable
@@ -1419,8 +1404,7 @@ describe("parameters", () => {
 
   describe("built-in functions", () => {
     const builtIns: [text: string, value: unknown, length: number][] = [
-      // biome-ignore lint/security/noGlobalEval: explicit test case
-      ["eval", eval, 1], // eslint-disable-line no-eval
+      ["eval", eval, 1],
       ["fetch", fetch, 2],
       ["setTimeout", setTimeout, 1],
       ["clearTimeout", clearTimeout, 1],
@@ -1428,6 +1412,7 @@ describe("parameters", () => {
       ["clearInterval", clearInterval, 1],
       ["setImmediate", setImmediate, 1],
       ["clearImmediate", clearImmediate, 1],
+      // oxlint-disable-next-line unicorn/prefer-module
       ["require", require, 1],
     ];
 

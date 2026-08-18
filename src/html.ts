@@ -59,7 +59,7 @@ export function validate(html: string): {
       errors.push({
         message: "No HTML content found",
       });
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      // oxlint-disable-next-line typescript/no-unnecessary-condition
     } else if (!hasTags) {
       errors.push({
         message: "No tags found",

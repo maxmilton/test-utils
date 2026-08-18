@@ -8,12 +8,12 @@ interface TestProps {
 }
 
 interface Refs {
-  t: Text;
+  a: Text;
 }
 
 const meta = compile(`
   <div id=test>
-    @t
+    @a
   </div>
 `);
 const view = h<HTMLDivElement>(meta.html);
@@ -22,7 +22,7 @@ export function Test(props: TestProps): TestComponent {
   const root = view;
   const refs = collect<Refs>(root, meta.k, meta.d);
 
-  refs.t.nodeValue = props.text;
+  refs.a.nodeValue = props.text;
 
   return root;
 }

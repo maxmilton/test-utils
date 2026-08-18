@@ -24,8 +24,6 @@ describe("exports", () => {
 });
 
 describe("setup", () => {
-  /* eslint-disable no-console */
-
   describe("$console", () => {
     test("global exists", () => {
       expect.assertions(1);
@@ -136,14 +134,13 @@ describe("setup", () => {
       test("clears log entries after read", () => {
         expect.assertions(3);
         expect(happyDOM.virtualConsolePrinter.read()).toHaveLength(0);
+        // oxlint-disable-next-line no-console
         console.log();
         expect(happyDOM.virtualConsolePrinter.read()).toHaveLength(1);
         expect(happyDOM.virtualConsolePrinter.read()).toHaveLength(0);
       });
     });
   });
-
-  /* eslint-enable no-console */
 });
 
 describe("render <no call>", () => {

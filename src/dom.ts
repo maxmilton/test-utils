@@ -2,18 +2,13 @@
  * @file Virtual browser DOM and utilities for writing DOM tests.
  */
 
-/* eslint "@typescript-eslint/no-invalid-void-type": "warn" */
-/* eslint "unicorn/no-global-object-property-assignment": "off" */
-
 import { GlobalWindow, type Window } from "happy-dom";
 
-/* eslint-disable vars-on-top */
 declare global {
   /** Real bun console. `console` is mapped to happy-dom's virtual console. */
   var $console: Console;
   var happyDOM: Window["happyDOM"];
 }
-/* eslint-enable */
 
 type AbstractConstructorHelper<T> = (new (...args: unknown[]) => Record<string, unknown>) & T;
 type AbstractConstructorParameters<T> = ConstructorParameters<AbstractConstructorHelper<T>>;
@@ -28,7 +23,6 @@ const originalConsole = global.console;
  * @see https://github.com/capricorn86/happy-dom/wiki/Window
  */
 export function setupDOM(options?: AbstractConstructorParameters<typeof Window>[0]): void {
-  /* eslint-disable @typescript-eslint/unbound-method */
   const dom = new GlobalWindow(options);
   global.happyDOM = dom.happyDOM;
   global.$console = originalConsole;
@@ -56,7 +50,6 @@ export function setupDOM(options?: AbstractConstructorParameters<typeof Window>[
   global.MutationObserver = window.MutationObserver;
   global.CSSStyleSheet = window.CSSStyleSheet;
   global.Text = window.Text;
-  /* eslint-enable @typescript-eslint/unbound-method */
 
   // //////////////////////////
 
@@ -140,10 +133,8 @@ export interface RenderResult {
    *
    * @param element - An element to inspect. Default is the mounted container.
    */
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-  debug(this: void, element?: Element): void;
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-  unmount(this: void): void;
+  debug: (element?: Element) => void;
+  unmount: () => void;
 }
 
 const mountedContainers = new Set<HTMLDivElement>();
@@ -151,7 +142,9 @@ const mountedContainers = new Set<HTMLDivElement>();
 export function render(component: Node): RenderResult {
   const container = document.createElement("div");
 
+  // oxlint-disable-next-line unicorn/prefer-dom-node-append
   container.appendChild(component);
+  // oxlint-disable-next-line unicorn/prefer-dom-node-append
   document.body.appendChild(container);
 
   mountedContainers.add(container);
@@ -163,7 +156,7 @@ export function render(component: Node): RenderResult {
       $console.log(`DEBUG:\n${el.getHTML()}`);
     },
     unmount() {
-      // eslint-disable-next-line unicorn/prefer-dom-node-remove
+      // oxlint-disable-next-line unicorn/prefer-dom-node-remove
       container.removeChild(component);
     },
   };

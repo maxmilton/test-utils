@@ -19,7 +19,7 @@ export function parameters(func: unknown): number {
   }
 
   const str = Function.prototype.toString.call(func);
-  const isClassConstructor = /^class\s/.test(str);
+  const isClassConstructor = /^class\s/u.test(str);
   const len = str.length;
   // Special handling for ES classes: str contains the entire class, so we must
   // locate the constructor's start because other methods may appear before it.
@@ -55,7 +55,7 @@ export function parameters(func: unknown): number {
       }
       if (char === ",") {
         count++;
-        continue; // eslint-disable-line no-continue
+        continue;
       }
     }
 
@@ -64,22 +64,18 @@ export function parameters(func: unknown): number {
       case "'":
       case "`":
         string(char);
-        // eslint-disable-next-line unicorn/no-break-in-nested-loop
         break;
       case "(":
       case "[":
       case "{":
         nested++;
-        // eslint-disable-next-line unicorn/no-break-in-nested-loop
         break;
       case ")":
       case "]":
       case "}":
         nested--;
-        // eslint-disable-next-line unicorn/no-break-in-nested-loop
         break;
       default:
-        // eslint-disable-next-line unicorn/no-break-in-nested-loop
         break;
     }
   }
@@ -90,10 +86,9 @@ export function parameters(func: unknown): number {
 
   // handle no parameters
   if (str.slice(start + 1, index).trim().length === 0) {
-    // eslint-disable-next-line @typescript-eslint/prefer-includes, unicorn/prefer-includes
     if (str.indexOf("[native code]", index) >= 0) {
       count = func.length;
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.warn("Optional parameters cannot be determined for native functions");
     } else {
       count = 0;
@@ -106,20 +101,19 @@ export function parameters(func: unknown): number {
 declare module "bun:test" {
   interface Matchers {
     /** Asserts that a value is a plain `object`. */
-    toBePlainObject(): void;
+    toBePlainObject: () => void;
     /** Asserts that a value is a `class`. */
-    toBeClass(): void;
+    toBeClass: () => void;
     /**
      * Asserts that a value has a specific object type. String form of type as
      * would be returned from `Object.prototype.toString.call(x)`.
      */
-    toHaveObjectType(prototype: string): void;
+    toHaveObjectType: (prototype: string) => void;
     /** Asserts that a function has a specific number of parameters. */
-    toHaveParameters(required: number, optional: number): void;
+    toHaveParameters: (required: number, optional: number) => void;
   }
 }
 
-// eslint-disable-next-line unicorn/no-top-level-side-effects
 expect.extend({
   toBePlainObject(received: unknown) {
     return Object.prototype.toString.call(received) === "[object Object]"
@@ -131,8 +125,8 @@ expect.extend({
   },
 
   toBeClass(received: unknown) {
-    return typeof received === "function"
-      && /^class\s/.test(Function.prototype.toString.call(received))
+    return typeof received === "function" &&
+      /^class\s/u.test(Function.prototype.toString.call(received))
       ? { pass: true }
       : {
           pass: false,
@@ -170,7 +164,6 @@ expect.extend({
       : {
           pass: false,
           message: () =>
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             `expected ${received.name} to have ${required}/${optional} required/optional parameters, but it has ${actualRequired}/${actualOptional}`,
         };
   },
