@@ -8,7 +8,7 @@
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "skipLibCheck": true,
-    "allowJs": true,
+    "allowJs": true, // type=module
     "checkJs": true,
     "maxNodeModuleJsDepth": 2,
     "noEmit": true,
@@ -26,5 +26,5 @@
 
     "types": ["bun", "stylis"]
   },
-  "include": ["*.config.js", "build.ts", "src", "test"]
+  "include": ["src", "test", "build.ts"]
 }
