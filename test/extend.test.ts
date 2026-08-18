@@ -1309,13 +1309,12 @@ describe("parameters", () => {
 
     test.each(builtins)("case %#: %s", (_, func, length) => {
       expect.assertions(3);
-      const spy = spyOn(console, "warn").mockImplementation(() => {});
+      using consoleSpy = spyOn(console, "warn").mockImplementation(() => {});
       expect(parameters(func)).toBe(length);
-      expect(spy).toBeCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(
+      expect(consoleSpy).toBeCalledTimes(1);
+      expect(consoleSpy).toHaveBeenCalledWith(
         "Optional parameters cannot be determined for native functions",
       );
-      spy.mockRestore();
     });
   });
 
@@ -1418,6 +1417,8 @@ describe("parameters", () => {
 
     test.each(builtIns)("has expected count for %s", (_, value, length) => {
       expect.assertions(1);
+      // oxlint-disable-next-line no-unused-vars
+      using consoleSpy = spyOn(console, "warn").mockImplementation(() => {});
       expect(parameters(value)).toBe(length);
     });
   });

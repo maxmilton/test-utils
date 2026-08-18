@@ -243,31 +243,28 @@ describe("render", () => {
 
     test("prints to $console", () => {
       expect.assertions(1);
-      const spy = spyOn($console, "log").mockImplementation(() => {});
+      using spy = spyOn($console, "log").mockImplementation(() => {});
       const rendered = render(document.createElement("div"));
       rendered.debug();
       expect(spy).toHaveBeenCalledTimes(1);
       // TODO: Uncomment once biome has a HTML parser.
       // expect(spy).toHaveBeenCalledWith("DEBUG:\n<div></div>\n");
-      spy.mockRestore();
     });
 
     test("does not print to console, only $console", () => {
       expect.assertions(2);
-      const spy = spyOn(console, "log").mockImplementation(() => {});
-      const spy2 = spyOn($console, "log").mockImplementation(() => {});
+      using spy = spyOn(console, "log").mockImplementation(() => {});
+      using spy2 = spyOn($console, "log").mockImplementation(() => {});
       const rendered = render(document.createElement("div"));
       rendered.debug();
       expect(spy).not.toHaveBeenCalled();
       expect(spy2).toHaveBeenCalledTimes(1);
-      spy.mockRestore();
-      spy2.mockRestore();
     });
 
     // TODO: Don't skip once biome has a HTML parser.
     test.skip("prints prettified container DOM to console", () => {
       expect.assertions(2);
-      const spy = spyOn($console, "log").mockImplementation(() => {});
+      using spy = spyOn($console, "log").mockImplementation(() => {});
       const main = document.createElement("main");
       main.append(
         document.createElement("div"),
@@ -280,7 +277,6 @@ describe("render", () => {
       expect(spy).toHaveBeenCalledWith(
         "DEBUG:\n<main>\n  <div></div>\n  <div></div>\n  <div></div>\n</main>\n",
       );
-      spy.mockRestore();
     });
   });
 });
