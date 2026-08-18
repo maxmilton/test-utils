@@ -1,0 +1,67 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "extends": ["./node_modules/@maxmilton/oxlint-config/recommended.json"],
+  "options": {
+    "maxWarnings": 50,
+    "reportUnusedDisableDirectives": "error",
+    "respectEslintDisableDirectives": false,
+    "typeAware": true,
+  },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "pedantic": "warn",
+    "perf": "error",
+    "style": "warn",
+    "restriction": "error",
+    "nursery": "warn",
+  },
+  // https://github.com/oxc-project/javascript-globals/blob/main/src/lib.rs
+  "env": {
+    "builtin": true,
+    "es2025": true,
+    "es2026": true,
+    "node": true,
+    "commonjs": false,
+  },
+  "globals": {
+    "Bun": "readonly",
+  },
+  "rules": {
+    "eslint/no-continue": "off",
+    "eslint/no-plusplus": "off",
+    "eslint/prefer-destructuring": "off",
+    "typescript/no-unsafe-type-assertion": "off",
+    "typescript/prefer-includes": "off",
+    "typescript/strict-boolean-expressions": "off",
+    "unicorn/prefer-includes": "off",
+
+    // TODO: These are buggy. Remove after future oxlint updates.
+    "typescript/prefer-readonly-parameter-types": "off",
+
+    // TODO: Remove these after next @maxmilton/oxlint-config release.
+    "eslint/one-var": "off",
+    "jsdoc/check-tag-names": ["error", { "definedTags": ["remarks"], "typed": true }],
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.test.ts", "test/**/*.spec.ts"],
+      "rules": {
+        "unicorn/consistent-function-scoping": "off", // tests may define scoped helpers
+      },
+    },
+    {
+      "files": ["src/dom.ts", "test/**"],
+      "globals": {
+        "$console": "readonly",
+        "happyDOM": "readonly",
+      },
+    },
+    {
+      "files": ["src/dom.ts", "test/dom.test.ts", "test/extend.test.ts"],
+      "env": {
+        "browser": true,
+      },
+    },
+  ],
+}
