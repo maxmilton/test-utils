@@ -100,16 +100,18 @@ export function parameters(func: unknown): number {
 
 declare module "bun:test" {
   interface Matchers {
-    /** Asserts that a value is a plain `object`. */
+    /** Asserts that a value is a plain object. */
     toBePlainObject: () => void;
-    /** Asserts that a value is a `class`. */
+    /** Asserts that a value was defined using ECMAScript `class` syntax. */
     toBeClass: () => void;
     /**
-     * Asserts that a value has a specific object type. String form of type as
-     * would be returned from `Object.prototype.toString.call(x)`.
+     * Asserts that a value has the ECMAScript `[[Construct]]` internal method.
+     * The value is not invoked, and successful construction is not guaranteed.
      */
+    toBeConstructible: () => void;
+    /** Asserts that a value has the given `Object.prototype.toString` type. */
     toHaveObjectType: (prototype: string) => void;
-    /** Asserts that a function has a specific number of parameters. */
+    /** Asserts that a function has the given required and optional parameters. */
     toHaveParameters: (required: number, optional: number) => void;
   }
 }
@@ -132,6 +134,23 @@ expect.extend({
           pass: false,
           message: () => `expected ${String(received)} to be a class`,
         };
+  },
+
+  toBeConstructible(received: unknown) {
+    if (typeof received === "function") {
+      try {
+        // Proxy does not invoke or access newTarget after IsConstructor checks it.
+        Reflect.construct(Proxy, [{}, {}], received);
+        return { pass: true };
+      } catch {
+        // not constructible
+      }
+    }
+
+    return {
+      pass: false,
+      message: () => `expected ${String(received)} to be constructible`,
+    };
   },
 
   toHaveObjectType(received: unknown, type: string) {

@@ -178,6 +178,288 @@ describe("matcher: toBeClass", () => {
   });
 });
 
+describe("matcher: toBeConstructible", () => {
+  // Reflect.construct is used in the matcher; sanity check to catch bun bugs.
+  describe("Reflect.construct sanity", () => {
+    test("ordinary functions are constructible", () => {
+      function Foo() {}
+      // oxlint-disable-next-line typescript/no-unsafe-return
+      expect(() => Reflect.construct(Object, [], Foo)).not.toThrow();
+    });
+
+    test("classes are constructible", () => {
+      // oxlint-disable-next-line typescript/no-extraneous-class
+      class Foo {}
+      expect(() => Reflect.construct(Object, [], Foo)).not.toThrow();
+    });
+
+    test("built-in constructors are constructible", () => {
+      expect(() => Reflect.construct(Object, [], Object)).not.toThrow();
+      expect(() => Reflect.construct(Object, [], Array)).not.toThrow();
+      expect(() => Reflect.construct(Object, [], Map)).not.toThrow();
+      expect(() => Reflect.construct(Object, [], Promise)).not.toThrow();
+    });
+
+    test("bound constructors are constructible", () => {
+      function Foo() {}
+      // oxlint-disable-next-line typescript/no-extraneous-class
+      class Bar {}
+      // oxlint-disable-next-line typescript/no-unsafe-return
+      expect(() => Reflect.construct(Object, [], Foo.bind(null))).not.toThrow();
+      expect(() => Reflect.construct(Object, [], Bar.bind(null))).not.toThrow();
+    });
+
+    test("arrow functions are not constructible", () => {
+      // oxlint-disable-next-line typescript/no-unsafe-return
+      expect(() => Reflect.construct(Object, [], () => {})).toThrow(TypeError);
+    });
+
+    test("async functions are not constructible", () => {
+      // oxlint-disable-next-line typescript/no-unsafe-return func-names prefer-arrow-callback
+      expect(() => Reflect.construct(Object, [], async function () {})).toThrow(TypeError);
+    });
+
+    test("generator functions are not constructible", () => {
+      // oxlint-disable-next-line typescript/no-unsafe-return func-names
+      expect(() => Reflect.construct(Object, [], function* () {})).toThrow(TypeError);
+    });
+
+    test("async generator functions are not constructible", () => {
+      // oxlint-disable-next-line typescript/no-unsafe-return func-names
+      expect(() => Reflect.construct(Object, [], async function* () {})).toThrow(TypeError);
+    });
+
+    test("object methods are not constructible", () => {
+      const object = { foo() {} };
+      // oxlint-disable-next-line typescript/no-unsafe-return typescript/unbound-method
+      expect(() => Reflect.construct(Object, [], object.foo)).toThrow(TypeError);
+    });
+
+    test("bound non-constructors remain non-constructible", () => {
+      // oxlint-disable-next-line no-shadow
+      const foo = () => {};
+      // oxlint-disable-next-line typescript/no-unsafe-return
+      expect(() => Reflect.construct(Object, [], foo.bind(null))).toThrow(TypeError);
+    });
+
+    test("Symbol and BigInt have [[Construct]] but reject construction", () => {
+      expect.assertions(4);
+      expect(Symbol).toBeConstructible();
+      expect(BigInt).toBeConstructible();
+      // oxlint-disable-next-line typescript/no-unsafe-return
+      expect(() => Reflect.construct(Symbol, [])).toThrow(TypeError);
+      // oxlint-disable-next-line typescript/no-unsafe-return
+      expect(() => Reflect.construct(BigInt, [])).toThrow(TypeError);
+    });
+
+    test("non-functions are not constructible", () => {
+      // oxlint-disable-next-line typescript/no-unsafe-return typescript/ban-types typescript/no-unsafe-function-type
+      expect(() => Reflect.construct(Object, [], null as unknown as Function)).toThrow(TypeError);
+      // oxlint-disable-next-line typescript/no-unsafe-return typescript/ban-types typescript/no-unsafe-function-type
+      expect(() => Reflect.construct(Object, [], {} as Function)).toThrow(TypeError);
+      // oxlint-disable-next-line typescript/no-unsafe-return typescript/ban-types typescript/no-unsafe-function-type
+      expect(() => Reflect.construct(Object, [], 123 as unknown as Function)).toThrow(TypeError);
+    });
+  });
+
+  // oxlint-disable-next-line typescript/no-extraneous-class
+  class Foo {}
+  function foo() {}
+  const constructible = [
+    // Classes.
+    Foo,
+    class Bar extends Foo {},
+    // oxlint-disable-next-line typescript/no-extraneous-class
+    class {},
+    class extends Foo {},
+    Foo.prototype.constructor,
+
+    // Ordinary functions have [[Construct]].
+    foo,
+    function bar() {},
+    // oxlint-disable-next-line func-names
+    function () {},
+    // oxlint-disable-next-line no-new-func typescript/no-implied-eval
+    new Function(),
+
+    // Bound functions preserve [[Construct]] when their target has it.
+    foo.bind(null),
+    Foo.bind(null),
+
+    // Built-in constructors.
+    Function,
+    Object,
+    Array,
+    String,
+    Number,
+    Boolean,
+    Symbol,
+    BigInt,
+    Date,
+    RegExp,
+    Error,
+    TypeError,
+    RangeError,
+    ReferenceError,
+    SyntaxError,
+    URIError,
+    EvalError,
+
+    Map,
+    Set,
+    WeakMap,
+    WeakSet,
+    Promise,
+
+    ArrayBuffer,
+    DataView,
+
+    Int8Array,
+    Uint8Array,
+    Uint8ClampedArray,
+    Int16Array,
+    Uint16Array,
+    Int32Array,
+    Uint32Array,
+    Float32Array,
+    Float64Array,
+    BigInt64Array,
+    BigUint64Array,
+
+    // Node/Bun.
+    Buffer,
+
+    // Web platform constructors available in Bun.
+    Blob,
+    File,
+    Headers,
+    Request,
+    Response,
+    URL,
+    URLSearchParams,
+    TextEncoder,
+    TextDecoder,
+    AbortController,
+  ];
+
+  const notConstructible = [
+    // Primitives.
+    "Hello",
+    123,
+    true,
+    false,
+    undefined,
+    null,
+    Symbol("sym"),
+    // oxlint-disable-next-line unicorn/prefer-bigint-literals
+    BigInt(1234),
+    // oxlint-disable-next-line unicorn/prefer-number-properties
+    NaN,
+    Infinity,
+
+    // Objects / instances.
+    {},
+    { foo: "bar" },
+    Object.create(null),
+    Object.create({}),
+    // oxlint-disable-next-line no-object-constructor
+    new Object(),
+    // oxlint-disable-next-line unicorn/no-new-array
+    new Array(1),
+    [[{}]],
+    [[null]],
+    /(?:)/u,
+    new Date(),
+    // oxlint-disable-next-line unicorn/error-message
+    new Error(),
+    new Map(),
+    new Set(),
+    new WeakMap(),
+    new WeakSet(),
+    // oxlint-disable-next-line promise/avoid-new
+    new Promise(() => {}),
+    new Int8Array(),
+
+    // Callable but without [[Construct]].
+    () => {},
+    // oxlint-disable-next-line func-names
+    async function () {},
+    async () => {},
+    // oxlint-disable-next-line func-names
+    function* () {},
+    // oxlint-disable-next-line func-names
+    async function* () {},
+
+    // Object methods are callable but not constructors.
+    // oxlint-disable-next-line typescript/unbound-method
+    { foo() {} }.foo,
+
+    // Bound non-constructible functions remain non-constructible.
+    // oxlint-disable-next-line no-extra-bind
+    (() => {}).bind(null),
+    // oxlint-disable-next-line no-extra-bind
+    (async () => {}).bind(null),
+
+    // Non-callable namespace objects.
+    Math,
+    JSON,
+    Reflect,
+    Atomics,
+  ];
+
+  test("expect() has matcher", () => {
+    expect.assertions(1);
+    expect(expect()).toHaveProperty("toBeConstructible");
+  });
+
+  test("matcher is a function", () => {
+    expect.assertions(2);
+    const matcher = expect().toBeConstructible;
+    expect(matcher).toBeFunction();
+    expect(matcher).not.toBeConstructible();
+  });
+
+  test("does not invoke the received constructor", () => {
+    expect.assertions(2);
+    let invoked = false;
+
+    function ThrowingConstructor() {
+      invoked = true;
+      throw new Error("constructor invoked");
+    }
+
+    expect(ThrowingConstructor).toBeConstructible();
+    expect(invoked).toBeFalse();
+  });
+
+  test("checks proxy [[Construct]] without invoking traps", () => {
+    expect.assertions(2);
+    function ConstructibleTarget() {}
+    const constructibleProxy = new Proxy(ConstructibleTarget, {
+      construct() {
+        throw new Error("construct trap invoked");
+      },
+      get() {
+        throw new Error("get trap invoked");
+      },
+    });
+    const nonConstructibleProxy = new Proxy(() => {}, {});
+
+    expect(constructibleProxy).toBeConstructible();
+    expect(nonConstructibleProxy).not.toBeConstructible();
+  });
+
+  test.each(constructible)("matches constructible %#: %p", (item) => {
+    expect.assertions(1);
+    expect(item).toBeConstructible();
+  });
+
+  test.each(notConstructible)("does not match non-constructible %#: %p", (item) => {
+    expect.assertions(1);
+    expect(item).not.toBeConstructible();
+  });
+});
+
 describe("matcher: toHaveObjectType", () => {
   const samples: [text: string, prototype: string, value: unknown][] = [
     ["null", "[object Null]", null],
