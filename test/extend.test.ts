@@ -4,6 +4,18 @@ import { describe, expect, spyOn, test } from "bun:test";
 import * as extendExports from "../src/extend.ts";
 import { parameters } from "../src/extend.ts";
 
+function matcherFailureMessage(assertion: () => void): string {
+  try {
+    assertion();
+  } catch (error) {
+    if (error instanceof Error) {
+      return Bun.stripANSI(error.message.split("\n\n").slice(1).join("\n\n"));
+    }
+    throw error;
+  }
+  throw new Error("Expected matcher to fail");
+}
+
 describe("exports", () => {
   const exports = ["parameters"];
 
@@ -73,6 +85,24 @@ describe("matcher: toBePlainObject", () => {
     const matcher = expect().toBePlainObject;
     expect(matcher).toBeFunction();
     expect(matcher).not.toBeConstructible();
+  });
+
+  test("failure message", () => {
+    expect.assertions(2);
+    expect(
+      matcherFailureMessage(() => {
+        expect(1).toBePlainObject();
+      }),
+    ).toBe("expected 1 to be a plain object");
+  });
+
+  test("negated failure message", () => {
+    expect.assertions(2);
+    expect(
+      matcherFailureMessage(() => {
+        expect({}).not.toBePlainObject();
+      }),
+    ).toBe("expected {} not to be a plain object");
   });
 
   test.each(plainObjects)("matches plain object %#", (item) => {
@@ -166,6 +196,24 @@ describe("matcher: toBeClass", () => {
     const matcher = expect().toBeClass;
     expect(matcher).toBeFunction();
     expect(matcher).not.toBeConstructible();
+  });
+
+  test("failure message", () => {
+    expect.assertions(2);
+    expect(
+      matcherFailureMessage(() => {
+        expect(() => {}).toBeClass();
+      }),
+    ).toBe("expected [Function] to be a class");
+  });
+
+  test("negated failure message", () => {
+    expect.assertions(2);
+    expect(
+      matcherFailureMessage(() => {
+        expect(Foo).not.toBeClass();
+      }),
+    ).toBe("expected [class Foo] not to be a class");
   });
 
   test.each(classes)("matches class %#: %p", (item) => {
@@ -420,6 +468,25 @@ describe("matcher: toBeConstructible", () => {
     expect(matcher).not.toBeConstructible();
   });
 
+  test("failure message", () => {
+    expect.assertions(2);
+    expect(
+      matcherFailureMessage(() => {
+        expect(() => {}).toBeConstructible();
+      }),
+    ).toBe("expected [Function] to be constructible");
+  });
+
+  test("negated failure message", () => {
+    expect.assertions(2);
+    function Constructible() {}
+    expect(
+      matcherFailureMessage(() => {
+        expect(Constructible).not.toBeConstructible();
+      }),
+    ).toBe("expected [Function: Constructible] not to be constructible");
+  });
+
   test("does not invoke the received constructor", () => {
     expect.assertions(2);
     let invoked = false;
@@ -551,6 +618,41 @@ describe("matcher: toHaveObjectType", () => {
     expect(matcher).not.toBeConstructible();
   });
 
+  test("failure message", () => {
+    expect.assertions(2);
+    expect(
+      matcherFailureMessage(() => {
+        expect(null).toHaveObjectType("[object String]");
+      }),
+    ).toBe('expected null to have object type "[object String]", but has "[object Null]"');
+  });
+
+  test("negated failure message", () => {
+    expect.assertions(2);
+    expect(
+      matcherFailureMessage(() => {
+        expect(null).not.toHaveObjectType("[object Null]");
+      }),
+    ).toBe('expected null not to have object type "[object Null]", but has "[object Null]"');
+  });
+
+  test("object type lookup failure message", () => {
+    expect.assertions(2);
+    const value = new Proxy(
+      {},
+      {
+        get() {
+          throw new Error("Unable to get object type");
+        },
+      },
+    );
+    expect(
+      matcherFailureMessage(() => {
+        expect(value).toHaveObjectType("[object Object]");
+      }),
+    ).toBe("unable to get object type of {}");
+  });
+
   test.each(samples)('%s has prototype "%s"', (_text, prototype, value) => {
     expect.assertions(1);
     expect(value).toHaveObjectType(prototype);
@@ -643,6 +745,35 @@ describe("matcher: toHaveParameters", () => {
     const matcher = expect().toHaveParameters;
     expect(matcher).toBeFunction();
     expect(matcher).not.toBeConstructible();
+  });
+
+  test("failure message", () => {
+    expect.assertions(2);
+    function foo(_value: unknown) {}
+    expect(
+      matcherFailureMessage(() => {
+        expect(foo).toHaveParameters(0, 0);
+      }),
+    ).toBe("expected [Function: foo] to have 0/0 required/optional parameters, but it has 1/0");
+  });
+
+  test("negated failure message", () => {
+    expect.assertions(2);
+    function foo() {}
+    expect(
+      matcherFailureMessage(() => {
+        expect(foo).not.toHaveParameters(0, 0);
+      }),
+    ).toBe("expected [Function: foo] not to have 0/0 required/optional parameters, but it has 0/0");
+  });
+
+  test("non-function failure message", () => {
+    expect.assertions(2);
+    expect(
+      matcherFailureMessage(() => {
+        expect(1).toHaveParameters(0, 0);
+      }),
+    ).toBe("expected 1 to be a function");
   });
 
   test.each(funcs)(

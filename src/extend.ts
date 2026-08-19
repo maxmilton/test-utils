@@ -110,7 +110,7 @@ declare module "bun:test" {
      */
     toBeConstructible: () => void;
     /** Asserts that a value has the given `Object.prototype.toString` type. */
-    toHaveObjectType: (prototype: string) => void;
+    toHaveObjectType: (type: string) => void;
     /** Asserts that a function has the given required and optional parameters. */
     toHaveParameters: (required: number, optional: number) => void;
   }
@@ -118,52 +118,58 @@ declare module "bun:test" {
 
 expect.extend({
   toBePlainObject(received: unknown) {
-    return Object.prototype.toString.call(received) === "[object Object]"
-      ? { pass: true }
-      : {
-          pass: false,
-          message: () => `expected ${String(received)} to be a plain object`,
-        };
+    const pass = Object.prototype.toString.call(received) === "[object Object]";
+    return {
+      pass,
+      message: () =>
+        `expected ${this.utils.printReceived(received)} ${pass ? "not " : ""}to be a plain object`,
+    };
   },
 
   toBeClass(received: unknown) {
-    return typeof received === "function" &&
-      /^class\s/u.test(Function.prototype.toString.call(received))
-      ? { pass: true }
-      : {
-          pass: false,
-          message: () => `expected ${String(received)} to be a class`,
-        };
+    const pass =
+      typeof received === "function" &&
+      /^class\s/u.test(Function.prototype.toString.call(received));
+    return {
+      pass,
+      message: () =>
+        `expected ${this.utils.printReceived(received)} ${pass ? "not " : ""}to be a class`,
+    };
   },
 
   toBeConstructible(received: unknown) {
+    let pass = false;
     if (typeof received === "function") {
       try {
         // Proxy does not invoke or access newTarget after IsConstructor checks it.
         Reflect.construct(Proxy, [{}, {}], received);
-        return { pass: true };
+        pass = true;
       } catch {
         // not constructible
       }
     }
 
     return {
-      pass: false,
-      message: () => `expected ${String(received)} to be constructible`,
+      pass,
+      message: () =>
+        `expected ${this.utils.printReceived(received)} ${pass ? "not " : ""}to be constructible`,
     };
   },
 
   toHaveObjectType(received: unknown, type: string) {
     try {
       const actual = Object.prototype.toString.call(received);
-      return actual === type
-        ? { pass: true }
-        : {
-            pass: false,
-            message: () => `expected value to have object type "${type}" but is "${actual}"`,
-          };
+      const pass = actual === type;
+      return {
+        pass,
+        message: () =>
+          `expected ${this.utils.printReceived(received)} ${pass ? "not " : ""}to have object type ${this.utils.printExpected(type)}, but has ${this.utils.printReceived(actual)}`,
+      };
     } catch {
-      return { pass: false, message: () => `Unable to get object type of ${String(received)}` };
+      return {
+        pass: false,
+        message: () => `unable to get object type of ${this.utils.printReceived(received)}`,
+      };
     }
   },
 
@@ -171,19 +177,18 @@ expect.extend({
     if (typeof received !== "function") {
       return {
         pass: false,
-        message: () => `expected ${String(received)} to be a function`,
+        message: () => `expected ${this.utils.printReceived(received)} to be a function`,
       };
     }
 
     const actualRequired = received.length;
     const actualOptional = parameters(received) - actualRequired;
+    const pass = actualRequired === required && actualOptional === optional;
 
-    return actualRequired === required && actualOptional === optional
-      ? { pass: true }
-      : {
-          pass: false,
-          message: () =>
-            `expected ${received.name} to have ${required}/${optional} required/optional parameters, but it has ${actualRequired}/${actualOptional}`,
-        };
+    return {
+      pass,
+      message: () =>
+        `expected ${this.utils.printReceived(received)} ${pass ? "not " : ""}to have ${this.utils.printExpected(required)}/${this.utils.printExpected(optional)} required/optional parameters, but it has ${this.utils.printReceived(actualRequired)}/${this.utils.printReceived(actualOptional)}`,
+    };
   },
 });
