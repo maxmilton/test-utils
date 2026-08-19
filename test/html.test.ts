@@ -25,7 +25,7 @@ describe("validate", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(validate).toBeFunction();
-    expect(validate).not.toBeClass();
+    expect(validate).not.toBeConstructible();
   });
 
   test("expects 1 parameter", () => {

@@ -24,6 +24,7 @@ describe("exports", () => {
 });
 
 describe("matcher: toBePlainObject", () => {
+  // oxlint-disable-next-line no-object-constructor
   const plainObjects = [{}, { foo: "bar" }, Object.create(null), Object.create({}), new Object()];
   const notPlainObjects = [
     null,
@@ -71,7 +72,7 @@ describe("matcher: toBePlainObject", () => {
     expect.assertions(2);
     const matcher = expect().toBePlainObject;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeClass();
+    expect(matcher).not.toBeConstructible();
   });
 
   test.each(plainObjects)("matches plain object %#", (item) => {
@@ -164,7 +165,7 @@ describe("matcher: toBeClass", () => {
     expect.assertions(2);
     const matcher = expect().toBeClass;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeClass();
+    expect(matcher).not.toBeConstructible();
   });
 
   test.each(classes)("matches class %#: %p", (item) => {
@@ -547,7 +548,7 @@ describe("matcher: toHaveObjectType", () => {
     expect.assertions(2);
     const matcher = expect().toHaveObjectType;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeClass();
+    expect(matcher).not.toBeConstructible();
   });
 
   test.each(samples)('%s has prototype "%s"', (_text, prototype, value) => {
@@ -641,7 +642,7 @@ describe("matcher: toHaveParameters", () => {
     expect.assertions(2);
     const matcher = expect().toHaveParameters;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeClass();
+    expect(matcher).not.toBeConstructible();
   });
 
   test.each(funcs)(

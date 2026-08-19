@@ -27,7 +27,7 @@ describe("performanceSpy", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(performanceSpy).toBeFunction();
-    expect(performanceSpy).not.toBeClass();
+    expect(performanceSpy).not.toBeConstructible();
   });
 
   test("expects 1 optional parameter", () => {
@@ -39,7 +39,7 @@ describe("performanceSpy", () => {
     expect.hasAssertions(); // variable number of assertions
     const check = performanceSpy();
     expect(check).toBeFunction();
-    expect(check).not.toBeClass();
+    expect(check).not.toBeConstructible();
     check();
   });
 

@@ -147,7 +147,7 @@ describe("render <no call>", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(render).toBeFunction();
-    expect(render).not.toBeClass();
+    expect(render).not.toBeConstructible();
   });
 
   test("expects 1 parameter", () => {
@@ -207,7 +207,7 @@ describe("render", () => {
       const rendered = render(document.createElement("div"));
       expect(rendered).toHaveProperty("unmount");
       expect(rendered.unmount).toBeFunction();
-      expect(rendered.unmount).not.toBeClass();
+      expect(rendered.unmount).not.toBeConstructible();
     });
 
     test("expects no parameters", () => {
@@ -232,7 +232,7 @@ describe("render", () => {
       const rendered = render(document.createElement("div"));
       expect(rendered).toHaveProperty("debug");
       expect(rendered.debug).toBeFunction();
-      expect(rendered.debug).not.toBeClass();
+      expect(rendered.debug).not.toBeConstructible();
     });
 
     test("expects 1 optional parameter", () => {
@@ -285,7 +285,7 @@ describe("cleanup", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(cleanup).toBeFunction();
-    expect(cleanup).not.toBeClass();
+    expect(cleanup).not.toBeConstructible();
   });
 
   test("expects no parameters", () => {
