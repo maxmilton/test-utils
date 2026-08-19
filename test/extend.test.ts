@@ -84,7 +84,7 @@ describe("matcher: toBePlainObject", () => {
     expect.assertions(2);
     const matcher = expect().toBePlainObject;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeConstructible();
+    expect(matcher).not.toBeClass();
   });
 
   test("failure message", () => {
@@ -195,7 +195,7 @@ describe("matcher: toBeClass", () => {
     expect.assertions(2);
     const matcher = expect().toBeClass;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeConstructible();
+    expect(matcher).not.toBeClass();
   });
 
   test("failure message", () => {
@@ -353,16 +353,13 @@ describe("matcher: toBeConstructible", () => {
     SyntaxError,
     URIError,
     EvalError,
-
     Map,
     Set,
     WeakMap,
     WeakSet,
     Promise,
-
     ArrayBuffer,
     DataView,
-
     Int8Array,
     Uint8Array,
     Uint8ClampedArray,
@@ -390,7 +387,6 @@ describe("matcher: toBeConstructible", () => {
     TextDecoder,
     AbortController,
   ];
-
   const notConstructible = [
     // Primitives.
     "Hello",
@@ -465,7 +461,7 @@ describe("matcher: toBeConstructible", () => {
     expect.assertions(2);
     const matcher = expect().toBeConstructible;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeConstructible();
+    expect(matcher).not.toBeClass();
   });
 
   test("failure message", () => {
@@ -615,7 +611,7 @@ describe("matcher: toHaveObjectType", () => {
     expect.assertions(2);
     const matcher = expect().toHaveObjectType;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeConstructible();
+    expect(matcher).not.toBeClass();
   });
 
   test("failure message", () => {
@@ -744,7 +740,7 @@ describe("matcher: toHaveParameters", () => {
     expect.assertions(2);
     const matcher = expect().toHaveParameters;
     expect(matcher).toBeFunction();
-    expect(matcher).not.toBeConstructible();
+    expect(matcher).not.toBeClass();
   });
 
   test("failure message", () => {
