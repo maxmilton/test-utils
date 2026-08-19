@@ -147,7 +147,7 @@ describe("render <no call>", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(render).toBeFunction();
-    expect(render).not.toBeConstructible();
+    expect(render).not.toBeClass();
   });
 
   test("expects 1 parameter", () => {
@@ -285,7 +285,7 @@ describe("cleanup", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(cleanup).toBeFunction();
-    expect(cleanup).not.toBeConstructible();
+    expect(cleanup).not.toBeClass();
   });
 
   test("expects no parameters", () => {

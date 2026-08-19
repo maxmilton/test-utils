@@ -92,7 +92,7 @@ describe("lookup", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(lookup).toBeFunction();
-    expect(lookup).not.toBeConstructible();
+    expect(lookup).not.toBeClass();
   });
 
   test("expects 2 parameters", () => {
@@ -149,7 +149,7 @@ describe("walk", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(walk).toBeFunction();
-    expect(walk).not.toBeConstructible();
+    expect(walk).not.toBeClass();
   });
 
   test("expects 2 parameters", () => {
@@ -189,7 +189,7 @@ describe("reduce", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(reduce).toBeFunction();
-    expect(reduce).not.toBeConstructible();
+    expect(reduce).not.toBeClass();
   });
 
   test("expects 1 parameter", () => {
@@ -304,7 +304,7 @@ describe("isHexColor", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(isHexColor).toBeFunction();
-    expect(isHexColor).not.toBeConstructible();
+    expect(isHexColor).not.toBeClass();
   });
 
   test("expects 1 parameter", () => {
@@ -332,7 +332,7 @@ describe("hexToRgb", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(hexToRgb).toBeFunction();
-    expect(hexToRgb).not.toBeConstructible();
+    expect(hexToRgb).not.toBeClass();
   });
 
   test("expects 1 parameter", () => {
@@ -350,7 +350,7 @@ describe("linearize", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(linearize).toBeFunction();
-    expect(linearize).not.toBeConstructible();
+    expect(linearize).not.toBeClass();
   });
 
   test("expects 1 parameter", () => {
@@ -368,7 +368,7 @@ describe("luminance", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(luminance).toBeFunction();
-    expect(luminance).not.toBeConstructible();
+    expect(luminance).not.toBeClass();
   });
 
   test("expects 1 parameter", () => {
@@ -386,7 +386,7 @@ describe("isLightOrDark", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(isLightOrDark).toBeFunction();
-    expect(isLightOrDark).not.toBeConstructible();
+    expect(isLightOrDark).not.toBeClass();
   });
 
   test("expects 1 parameter", () => {

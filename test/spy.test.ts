@@ -27,7 +27,7 @@ describe("performanceSpy", () => {
   test("is a function", () => {
     expect.assertions(2);
     expect(performanceSpy).toBeFunction();
-    expect(performanceSpy).not.toBeConstructible();
+    expect(performanceSpy).not.toBeClass();
   });
 
   test("expects 1 optional parameter", () => {
