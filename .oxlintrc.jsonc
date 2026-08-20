@@ -21,6 +21,8 @@
     "builtin": true,
     "es2025": true,
     "es2026": true,
+    // TODO: Use "bun" instead of "node" + "globals" once supported: https://github.com/oxc-project/javascript-globals/issues/274
+    "bun": true,
     "node": true,
     "commonjs": false,
   },
