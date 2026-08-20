@@ -22,8 +22,7 @@ export const cleanElement = <T extends Element & { siblings?: Element[] }>(eleme
   return rest as T;
 };
 
-// oxlint-disable-next-line typescript/no-invalid-void-type
-type VisitorFunction = (element: Element) => typeof SKIP | void;
+type VisitorFunction = (element: Element) => typeof SKIP | undefined;
 
 function visit(element: Element, visitor: VisitorFunction): void {
   if (visitor(element) === SKIP) return;
@@ -59,9 +58,8 @@ function load(root: Element[]): void {
         case SCOPE:
         case STARTING_STYLE:
         case SUPPORTS:
-          return;
+          return undefined;
         default:
-          // oxlint-disable-next-line typescript/consistent-return
           return SKIP;
       }
     }
@@ -76,7 +74,6 @@ function load(root: Element[]): void {
         }
       }
     }
-    // oxlint-disable-next-line typescript/consistent-return
     return SKIP;
   });
 }
