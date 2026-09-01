@@ -58,6 +58,7 @@ function load(root: Element[]): void {
         case SCOPE:
         case STARTING_STYLE:
         case SUPPORTS:
+          // oxlint-disable-next-line unicorn/no-useless-undefined
           return undefined;
         default:
           return SKIP;

@@ -1349,7 +1349,7 @@ describe("parameters", () => {
       // oxlint-disable-next-line typescript/no-extraneous-class
       class Foo {
         // oxlint-disable-next-line no-useless-constructor
-        constructor(_a: unknown, _b: unknown) {}
+        public constructor(_a: unknown, _b: unknown) {}
       }
       expect(parameters(Foo)).toBe(2);
     });
@@ -1359,7 +1359,7 @@ describe("parameters", () => {
       // oxlint-disable-next-line typescript/no-extraneous-class
       class Foo {
         // oxlint-disable-next-line no-useless-constructor
-        constructor() {}
+        public constructor() {}
       }
       expect(parameters(Foo)).toBe(0);
     });
@@ -1369,16 +1369,16 @@ describe("parameters", () => {
       // oxlint-disable-next-line typescript/no-extraneous-class
       class Foo {
         // oxlint-disable-next-line no-useless-constructor
-        constructor(_a: unknown, _b: unknown) {}
+        public constructor(_a: unknown, _b: unknown) {}
       }
       class Bar extends Foo {
         // oxlint-disable-next-line no-unused-vars
-        constructor(_a: unknown, _b: unknown, _c: unknown) {
+        public constructor(_a: unknown, _b: unknown, _c: unknown) {
           super(_a, _b);
         }
       }
       class Baz extends Bar {
-        constructor() {
+        public constructor() {
           super(null, null, null);
         }
       }
@@ -1394,7 +1394,7 @@ describe("parameters", () => {
           // oxlint-disable-next-line typescript/no-extraneous-class
           class {
             // oxlint-disable-next-line no-useless-constructor
-            constructor(_a: unknown, _b: unknown) {}
+            public constructor(_a: unknown, _b: unknown) {}
           },
         ),
       ).toBe(2);
@@ -1418,7 +1418,7 @@ describe("parameters", () => {
         expect.assertions(1);
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
           public method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
@@ -1429,7 +1429,7 @@ describe("parameters", () => {
         expect.assertions(1);
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
           public method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
@@ -1451,7 +1451,7 @@ describe("parameters", () => {
         expect.assertions(1);
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
           public *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             yield null;
@@ -1465,7 +1465,7 @@ describe("parameters", () => {
         expect.assertions(1);
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
           public async method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             await Promise.resolve();
@@ -1479,7 +1479,7 @@ describe("parameters", () => {
         expect.assertions(1);
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
           public async *method(this: void, _c: unknown, _d: unknown, _e: unknown) {
             await Promise.resolve();
@@ -1494,7 +1494,7 @@ describe("parameters", () => {
         expect.assertions(1);
         const instance = new (class {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
           public method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
         })(1, 2);
@@ -1519,7 +1519,7 @@ describe("parameters", () => {
           // oxlint-disable-next-line typescript/no-invalid-void-type
           public static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo)).toBe(2);
       });
@@ -1530,7 +1530,7 @@ describe("parameters", () => {
           // oxlint-disable-next-line typescript/no-invalid-void-type
           public static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1553,7 +1553,7 @@ describe("parameters", () => {
             yield null;
           }
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1566,7 +1566,7 @@ describe("parameters", () => {
             await Promise.resolve();
           }
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1580,7 +1580,7 @@ describe("parameters", () => {
             yield null;
           }
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
         }
         expect(parameters(Foo.method)).toBe(3);
       });
@@ -1593,7 +1593,7 @@ describe("parameters", () => {
               // oxlint-disable-next-line typescript/no-invalid-void-type
               public static method(this: void, _c: unknown, _d: unknown, _e: unknown) {}
               // oxlint-disable-next-line no-useless-constructor
-              constructor(_a: unknown, _b: unknown) {}
+              public constructor(_a: unknown, _b: unknown) {}
             }.method,
           ),
         ).toBe(3);
@@ -1614,7 +1614,7 @@ describe("parameters", () => {
         expect.assertions(1);
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this
           public get prop(): null {
             return null;
@@ -1629,7 +1629,7 @@ describe("parameters", () => {
         expect.assertions(1);
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this
           public get prop(): null {
             return null;
@@ -1648,7 +1648,7 @@ describe("parameters", () => {
         const prop = "method";
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
           public [prop](this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
@@ -1660,7 +1660,7 @@ describe("parameters", () => {
         const prop = "method";
         class Foo {
           // oxlint-disable-next-line no-useless-constructor
-          constructor(_a: unknown, _b: unknown) {}
+          public constructor(_a: unknown, _b: unknown) {}
           // oxlint-disable-next-line class-methods-use-this typescript/no-invalid-void-type
           public [prop](this: void, _c: unknown, _d: unknown, _e: unknown) {}
         }
@@ -1813,6 +1813,7 @@ describe("parameters", () => {
 
   describe("built-in functions", () => {
     const builtIns: [text: string, value: unknown, length: number][] = [
+      // oxlint-disable-next-line no-eval
       ["eval", eval, 1],
       ["fetch", fetch, 2],
       ["setTimeout", setTimeout, 1],
