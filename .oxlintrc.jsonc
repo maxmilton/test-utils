@@ -19,15 +19,9 @@
   // https://github.com/oxc-project/javascript-globals/blob/main/src/lib.rs
   "env": {
     "builtin": true,
-    "es2025": true,
-    "es2026": true,
-    // TODO: Use "bun" instead of "node" + "globals" once supported: https://github.com/oxc-project/javascript-globals/issues/274
+    "es2026": true, // TODO: es2027 once in oxc.
     "bun": true,
-    "node": true,
     "commonjs": false,
-  },
-  "globals": {
-    "Bun": "readonly",
   },
   "rules": {
     "eslint/no-continue": "off",
@@ -40,10 +34,6 @@
 
     // TODO: These are buggy. Remove after future oxlint updates.
     "typescript/prefer-readonly-parameter-types": "off",
-
-    // TODO: Remove these after next @maxmilton/oxlint-config release.
-    "eslint/one-var": "off",
-    "jsdoc/check-tag-names": ["error", { "definedTags": ["remarks"], "typed": true }],
   },
   "overrides": [
     {
