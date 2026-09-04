@@ -54,7 +54,7 @@
     "stylis": "^4.3.6"
   },
   "devDependencies": {
-    "@maxmilton/oxlint-config": "0.0.14",
+    "@maxmilton/oxlint-config": "0.0.15",
     "@types/bun": "1.4.0",
     "happy-dom": "20.11.8",
     "oxfmt": "0.65.0",

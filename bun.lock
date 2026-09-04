@@ -10,7 +10,7 @@
         "stylis": "^4.3.6",
       },
       "devDependencies": {
-        "@maxmilton/oxlint-config": "0.0.14",
+        "@maxmilton/oxlint-config": "0.0.15",
         "@types/bun": "1.4.0",
         "happy-dom": "20.11.8",
         "oxfmt": "0.65.0",
@@ -30,7 +30,7 @@
   "packages": {
     "@maxmilton/html-parser": ["@maxmilton/html-parser@0.0.14", "", {}, "sha512-cxWhGdrB9e/FlVMYQ7Kf5GCSwwv9G819LQFsxEOjpYgl+sL6REK4KoTeEe+VFRwHjZ8/0mXUdZZTBX3/XD9YWQ=="],
 
-    "@maxmilton/oxlint-config": ["@maxmilton/oxlint-config@0.0.14", "", { "peerDependencies": { "oxlint": "^1.78.0" } }, "sha512-lWTfFHQajeRu+guMf4U511k4AjajA3bvuZWf12BS26vSAtJoo3eOw6A3/UF2tByzfoVHk953DmApNRDFvTYtJg=="],
+    "@maxmilton/oxlint-config": ["@maxmilton/oxlint-config@0.0.15", "", { "peerDependencies": { "oxlint": "^1.79.0" } }, "sha512-Rj9IqAf42erCu9yJZg8O+G4q0JnDdctolgCmGOrGPmlt3sNnrws6e7Ngi+cgRTEch8AdMCVyyQGCzJTC2wk4Gg=="],
 
     "@oxfmt/binding-android-arm-eabi": ["@oxfmt/binding-android-arm-eabi@0.65.0", "", { "os": "android", "cpu": "arm" }, "sha512-M10Gs1SSpTNI6ahGx3M/OlIdUF4hkaP6OgUb+MS79t/Pgflk3r1nW5gPFqsZGUAXg0H1AfANT9AvLdBSTIhZKg=="],
 
