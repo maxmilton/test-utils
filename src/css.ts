@@ -1,6 +1,4 @@
-/**
- * @file CSS engine and utilities for writing CSS tests.
- */
+/** @file CSS engine and utilities for writing CSS tests. */
 
 import { compile, DECLARATION, type Element, LAYER, MEDIA, RULESET, SCOPE, SUPPORTS } from "stylis";
 
@@ -33,9 +31,7 @@ function visit(element: Element, visitor: VisitorFunction): void {
   }
 }
 
-/**
- * Walks the AST and calls the visitor function for each element.
- */
+/** Walks the AST and calls the visitor function for each element. */
 export function walk(root: Element[], visitor: VisitorFunction): void {
   for (const element of root) {
     visit(element, visitor);
@@ -79,9 +75,7 @@ function load(root: Element[]): void {
   });
 }
 
-/**
- * Returns a list of elements matching the given CSS selector.
- */
+/** Returns a list of elements matching the given CSS selector. */
 export function lookup(root: Element[], cssSelector: string): Element[] | undefined {
   if (!cache.has(root)) load(root);
 
@@ -109,7 +103,6 @@ export function lookup(root: Element[], cssSelector: string): Element[] | undefi
  *
  * NOTE: `@media`, `@layer`, `@supports`, etc. rules are currently not handled.
  * All declarations will be merged regardless of their parent rules.
- *
  */
 // FIXME: Evaluate at-rules and handle them appropriately. This adds a lot of
 // complexity, so consider using happy-dom if they have support for it.

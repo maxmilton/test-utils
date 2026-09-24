@@ -1,6 +1,4 @@
-/**
- * @file Bun test introspection utilities to spy on internals.
- */
+/** @file Bun test introspection utilities to spy on internals. */
 
 import { expect, type Mock, spyOn } from "bun:test";
 
@@ -61,7 +59,7 @@ export function performanceSpy(exclude: string[] = []): () => void {
     }
   }
 
-  return /** check */ () => {
+  return /** Check */ () => {
     for (const spy of spies) {
       if (spy.getMockName() === "now") {
         // HACK: Workaround for happy-dom calling performance.now internally.

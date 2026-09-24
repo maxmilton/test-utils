@@ -1,6 +1,4 @@
-/**
- * @file Extended matchers for Bun test.
- */
+/** @file Extended matchers for Bun test. */
 
 import { expect } from "bun:test";
 
@@ -8,9 +6,9 @@ import { expect } from "bun:test";
  * Get the total number of parameters of a function including optional
  * parameters with default values.
  *
- * @remarks Native functions will only return the number of required parameters;
- * optional parameters cannot be determined.
- *
+ * @remarks
+ *   Native functions will only return the number of required parameters;
+ *   optional parameters cannot be determined.
  * @returns The number of parameters, including optional parameters.
  */
 export function parameters(func: unknown): number {

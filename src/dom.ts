@@ -1,12 +1,14 @@
-/**
- * @file Virtual browser DOM and utilities for writing DOM tests.
- */
+/** @file Virtual browser DOM and utilities for writing DOM tests. */
 
 import { GlobalWindow, type Window } from "happy-dom";
 
 declare global {
-  /** Real bun console. `console` is mapped to happy-dom's virtual console. */
+  /**
+   * Real bun console. `console` is mapped to happy-dom's virtual console.
+   * Only set when `setupDOM()` is called.
+   */
   var $console: Console;
+  /** Only set when `setupDOM()` is called. */
   var happyDOM: Window["happyDOM"];
 }
 
@@ -20,6 +22,7 @@ const originalConsole = global.console;
  * Setup virtual DOM via happy-dom.
  *
  * Takes the same options as happy-dom's Window constructor.
+ *
  * @see https://github.com/capricorn86/happy-dom/wiki/Window
  */
 export function setupDOM(options?: AbstractConstructorParameters<typeof Window>[0]): void {
