@@ -51,15 +51,15 @@
   "dependencies": {
     "@maxmilton/html-parser": "^0.0.15",
     "@types/stylis": "^4.2.7",
-    "stylis": "^4.3.6"
+    "stylis": "^4.4.0"
   },
   "devDependencies": {
     "@maxmilton/oxlint-config": "0.0.20",
     "@types/bun": "1.4.2",
     "happy-dom": "20.14.5",
-    "oxfmt": "0.68.0",
-    "oxlint": "1.83.0",
-    "oxlint-tsgolint": "7.0.2001",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
+    "oxlint-tsgolint": "7.0.2002",
     "stage1": "0.11.0-next.0",
     "typescript": "7.0.2"
   },
