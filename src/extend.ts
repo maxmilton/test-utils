@@ -126,8 +126,8 @@ expect.extend({
 
   toBeClass(received: unknown) {
     const pass =
-      typeof received === "function" &&
-      /^class\s/u.test(Function.prototype.toString.call(received));
+      typeof received === "function"
+      && /^class\s/u.test(Function.prototype.toString.call(received));
     return {
       pass,
       message: () =>
