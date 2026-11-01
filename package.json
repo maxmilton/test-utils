@@ -60,7 +60,7 @@
     "oxfmt": "0.70.0",
     "oxlint": "1.85.0",
     "oxlint-tsgolint": "7.0.2002",
-    "stage1": "0.11.0-next.0",
+    "stage1": "0.12.1",
     "typescript": "7.0.2"
   },
   "peerDependencies": {

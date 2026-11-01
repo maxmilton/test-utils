@@ -16,7 +16,7 @@
         "oxfmt": "0.70.0",
         "oxlint": "1.85.0",
         "oxlint-tsgolint": "7.0.2002",
-        "stage1": "0.11.0-next.0",
+        "stage1": "0.12.1",
         "typescript": "7.0.2",
       },
       "peerDependencies": {
@@ -184,7 +184,7 @@
 
     "oxlint-tsgolint": ["oxlint-tsgolint@7.0.2002", "", { "optionalDependencies": { "@oxlint-tsgolint/darwin-arm64": "7.0.2002", "@oxlint-tsgolint/darwin-x64": "7.0.2002", "@oxlint-tsgolint/linux-arm64": "7.0.2002", "@oxlint-tsgolint/linux-x64": "7.0.2002", "@oxlint-tsgolint/win32-arm64": "7.0.2002", "@oxlint-tsgolint/win32-x64": "7.0.2002" }, "bin": { "tsgolint": "./bin/tsgolint.js" } }, "sha512-rQAj2RAQM57nCwTd3PhtnAkREGW2StqI47tzudNlJF8WwGommM7rVpeP4O1O8/ZiuDZ9f2GnTESzLHGTluwkvQ=="],
 
-    "stage1": ["stage1@0.11.0-next.0", "", {}, "sha512-h8gho5i448pwIaxIzBFQNaErcpro3CDEMTd2U69+t33Z1UloAeHvJKiQy+yhmEhjNSF40be8pP/cp49WZlFiTA=="],
+    "stage1": ["stage1@0.12.1", "", {}, "sha512-iEcEUNd/emnowy9lWiRQRcvY+Kd9qn34K++lpV0/fbcGXsfaGKIG603WUUnx0UC1YgsYO5XmxCzvrE4WnNFjDA=="],
 
     "stylis": ["stylis@4.4.0", "", {}, "sha512-5Z9ZpRzfuH6l/UAvCPAPUo3665Nk2wLaZU3x+TLHKVzIz33+sbJqbtrYoC3KD4/uVOr2Zp+L0LySezP9OHV9yA=="],
 
