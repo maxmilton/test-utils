@@ -58,7 +58,7 @@
     "@types/bun": "1.4.2",
     "happy-dom": "20.14.5",
     "oxfmt": "0.70.0",
-    "oxlint": "1.85.0",
+    "oxlint": "1.89.0",
     "oxlint-tsgolint": "7.0.2002",
     "stage1": "0.11.0-next.0",
     "typescript": "7.0.2"
