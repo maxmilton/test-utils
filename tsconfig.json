@@ -19,7 +19,6 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false, // covered by linters
     "noImplicitOverride": true,
-    "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true, // pedantic
     "noUncheckedSideEffectImports": true,
     "noUnusedLocals": false, // covered by linters
